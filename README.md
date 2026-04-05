@@ -226,8 +226,11 @@ claude plugin install dotclaude@dotclaude
 ### Update
 
 ```bash
+claude plugin marketplace update dotclaude
 claude plugin update dotclaude@dotclaude
 ```
+
+The marketplace update fetches the latest index. The plugin update pulls the new version. Both steps needed.
 
 Or from Claude Code: `/dotclaude:update`
 

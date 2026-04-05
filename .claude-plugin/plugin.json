@@ -1,0 +1,5 @@
+{
+  "name": "DotClaude",
+  "version": "1.0.0",
+  "description": "Code conventions, agents, and tooling for all projects. Includes ESLint/Prettier enforcement, repo-map (agent-analyzer), and deslop (code quality scanning)."
+}

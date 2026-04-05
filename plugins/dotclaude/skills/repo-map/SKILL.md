@@ -5,7 +5,7 @@ description: "Use when exploring a new codebase, onboarding to a repo, or needin
 
 # Repo Map — agent-analyzer
 
-Generates a symbol index of any codebase using the `agent-analyzer` Rust binary. Gives agents a map of the codebase (functions, exports, imports) without reading every file. Saves massive context.
+Generates a full repository intelligence map using the `agent-analyzer` Rust binary. Extracts symbols (functions, exports, imports), analyzes git history, and builds a queryable index — without reading every file. Saves massive context.
 
 ## First-Time Setup
 
@@ -19,16 +19,27 @@ This downloads `agent-analyzer` from [agent-sh/agent-analyzer](https://github.co
 
 ## Usage
 
-### Generate repo map
+### Generate repo intelligence map (primary command)
 ```bash
-~/.agent-sh/bin/agent-analyzer repo-map generate . > .claude/repo-map.json
+~/.agent-sh/bin/agent-analyzer repo-intel init . --max-commits 200
 ```
 
-### Available commands
+Creates `.claude/repo-intel.json` with full symbol index, import graph, and git history analysis.
+
+### Update existing map (incremental)
 ```bash
-# Full repo intelligence (extraction + aggregation)
-~/.agent-sh/bin/agent-analyzer repo-intel extract .
-~/.agent-sh/bin/agent-analyzer repo-intel aggregate .
+~/.agent-sh/bin/agent-analyzer repo-intel update .
+```
+
+### Query symbols for a specific file
+```bash
+~/.agent-sh/bin/agent-analyzer repo-map symbols --map-file .claude/repo-intel.json src/api/auth/hooks.ts
+```
+
+### Other commands
+```bash
+# AST symbol extraction only (summary)
+~/.agent-sh/bin/agent-analyzer repo-map generate .
 
 # Project data collection
 ~/.agent-sh/bin/agent-analyzer collect .
@@ -50,8 +61,9 @@ Add to project's `package.json` scripts:
 
 ```json
 {
-  "repo-map": "~/.agent-sh/bin/agent-analyzer repo-map generate . > .claude/repo-map.json"
+  "repo-map": "~/.agent-sh/bin/agent-analyzer repo-intel init . --max-commits 200",
+  "repo-map:update": "~/.agent-sh/bin/agent-analyzer repo-intel update ."
 }
 ```
 
-Add `.claude/repo-map.json` to `.gitignore` — it's a local cache.
+Add `.claude/repo-intel.json` to `.gitignore` — it's a local cache.

@@ -1,11 +1,11 @@
 ---
-description: Generate a symbol index of the codebase using agent-analyzer. Saves to .claude/repo-map.json.
+description: Generate a full repository intelligence map using agent-analyzer. Saves to .claude/repo-intel.json.
 argument-hint: [path]
 ---
 
 # /repo-map
 
-Generate a repo map (symbol index) of the codebase.
+Generate a repo intelligence map (symbols, history, imports) of the codebase.
 
 ## Steps
 
@@ -24,24 +24,26 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/install-repo-map.sh"
 mkdir -p .claude
 ```
 
-4. Run the repo map generator on the target path (default: current directory):
+4. Generate the repo intelligence map:
 ```bash
-~/.agent-sh/bin/agent-analyzer repo-map generate ${ARGUMENT:-.} > .claude/repo-map.json
+~/.agent-sh/bin/agent-analyzer repo-intel init ${ARGUMENT:-.} --max-commits 200
 ```
+
+This creates `.claude/repo-intel.json` automatically.
 
 5. Report results:
 ```bash
-echo "Repo map saved to .claude/repo-map.json"
-wc -l .claude/repo-map.json | awk '{print $1 " lines"}'
+ls -lh .claude/repo-intel.json 2>/dev/null && echo "Repo intel map generated"
 ```
 
 6. Add to .gitignore if not already there:
 ```bash
-grep -q 'repo-map.json' .gitignore 2>/dev/null || echo '.claude/repo-map.json' >> .gitignore
+grep -q 'repo-intel.json' .gitignore 2>/dev/null || echo '.claude/repo-intel.json' >> .gitignore
 ```
 
 ## Rules
 
 - Always check if binary exists before trying to scan.
 - If scan fails, report the error — don't silently skip.
-- The repo map is a LOCAL cache — never commit it.
+- The repo intel map is a LOCAL cache — never commit it.
+- Use `--max-commits 200` to keep scan time reasonable. User can request more.

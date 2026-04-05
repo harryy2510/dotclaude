@@ -31,7 +31,7 @@
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │                                                              │
-│   Install:  claude plugin add github:harryy2510/dotclaude        │
+│   Install:  claude plugin add github:harryy2510/dotclaude    │
 │   Setup:    /dotclaude:setup                                 │
 │                                                              │
 │   That's it. Every project. Every agent. Same standards.     │

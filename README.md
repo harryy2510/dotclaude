@@ -32,8 +32,8 @@
 ┌────────────────────────────────────────────────────────────────────────────┐
 │                                                                            │
 │   claude plugin marketplace add harryy2510/dotclaude                       │
-│   claude plugin install DotClaude                                          │
-│   /dotclaude:setup                                                         │
+│   claude plugin install dotclaude@dotclaude                                │
+│   /dotclaude:dotclaude-setup                                               │
 │                                                                            │
 │   That's it. Every project. Every agent. Same standards.                   │
 │                                                                            │
@@ -103,9 +103,9 @@ Type these directly in Claude Code:
 | `/repo-map` | 🗺️ Runs agent-analyzer → builds symbol index → saves to `.claude/repo-map.json` |
 | `/deslop` | 🧹 Scans codebase for slop → reports findings → offers to fix |
 | `/skill-lint` | ✅ Validates skills + agents → checks frontmatter, size, refs, triggers |
-| `/dotclaude:setup` | 🔧 One-time: copies conventions to `~/.claude/CLAUDE.md` + installs agent-analyzer |
-| `/dotclaude:update` | 🔄 Updates plugin + refreshes CLAUDE.md conventions |
-| `/dotclaude:teardown` | 🗑️ Removes DotClaude conventions from CLAUDE.md |
+| `/dotclaude:dotclaude-setup` | 🔧 One-time: copies conventions to `~/.claude/CLAUDE.md` + installs agent-analyzer |
+| `/dotclaude:dotclaude-update` | 🔄 Updates plugin + refreshes CLAUDE.md conventions |
+| `/dotclaude:dotclaude-uninstall` | 🗑️ Removes DotClaude conventions from CLAUDE.md |
 
 ```
   /deslop src/              ← you type this
@@ -217,43 +217,43 @@ Uses Claude Code's native plugin system. No custom scripts needed.
 claude plugin marketplace add harryy2510/dotclaude
 
 # 2. Install the plugin
-claude plugin install DotClaude
+claude plugin install dotclaude@dotclaude
 
 # 3. Run setup in Claude Code
-/dotclaude:setup
+/dotclaude:dotclaude-setup
 ```
 
 ### Update
 
 ```bash
-claude plugin update DotClaude
+claude plugin update dotclaude@dotclaude
 ```
 
-Or from Claude Code: `/dotclaude:update`
+Or from Claude Code: `/dotclaude:dotclaude-update`
 
 ### Uninstall
 
-Run `/dotclaude:teardown` first (removes conventions from CLAUDE.md), then:
+Run `/dotclaude:dotclaude-uninstall` first (removes conventions from CLAUDE.md), then:
 
 ```bash
-claude plugin uninstall DotClaude
+claude plugin uninstall dotclaude@dotclaude
 ```
 
 ### What happens where
 
 ```
   marketplace add           →  Registers the repo as a plugin source
-  plugin install            →  Clones + caches in ~/.claude/plugins/cache/
-                               Skills, agents, commands available immediately
+  plugin install              →  Clones + caches in ~/.claude/plugins/cache/
+                                 Skills, agents, commands available immediately
 
-  /dotclaude:setup          →  Conventions copied to ~/.claude/CLAUDE.md
-                               agent-analyzer binary installed
+  /dotclaude:dotclaude-setup →  Conventions copied to ~/.claude/CLAUDE.md
+                                 agent-analyzer binary installed
 
-  plugin update             →  Plugin cache refreshed from git
-  /dotclaude:update         →  Same + refreshes CLAUDE.md conventions
+  plugin update              →  Plugin cache refreshed from git
+  /dotclaude:dotclaude-update → Same + refreshes CLAUDE.md conventions
 
-  /dotclaude:teardown       →  Removes conventions from ~/.claude/CLAUDE.md
-  plugin uninstall          →  Removes plugin from cache
+  /dotclaude:dotclaude-uninstall → Removes conventions from ~/.claude/CLAUDE.md
+  plugin uninstall              →  Removes plugin from cache
 ```
 
 ---

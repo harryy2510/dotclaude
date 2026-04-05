@@ -1,5 +1,5 @@
 {
   "name": "dotclaude",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Code conventions, agents, and tooling for all projects. Includes ESLint/Prettier enforcement, repo-map (agent-analyzer), and deslop (code quality scanning)."
 }

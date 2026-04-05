@@ -14,32 +14,27 @@ Generate a repo intelligence map (symbols, imports, git history) of the codebase
 ~/.agent-sh/bin/agent-analyzer --version 2>/dev/null || echo "NOT_INSTALLED"
 ```
 
-2. If NOT_INSTALLED, run the installer:
+2. If NOT_INSTALLED, install it:
 ```bash
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/install-repo-map.sh"
 ```
 
-3. Create .claude directory if it doesn't exist:
+3. Generate the map (JSON to stdout, logs to stderr):
 ```bash
-mkdir -p .claude
+mkdir -p .claude && ~/.agent-sh/bin/agent-analyzer repo-intel init ${ARGUMENT:-.} --max-commits 200 2>/dev/null > .claude/repo-intel.json
 ```
 
-4. Generate the repo intelligence map (JSON goes to stdout, logs to stderr):
+4. Verify output:
 ```bash
-~/.agent-sh/bin/agent-analyzer repo-intel init ${ARGUMENT:-.} --max-commits 200 2>/dev/null > .claude/repo-intel.json
+python3 -c "import json; d=json.load(open('.claude/repo-intel.json')); print(f'{len(d.get(\"symbols\",{}))} files, {d.get(\"git\",{}).get(\"totalCommitsAnalyzed\",0)} commits analyzed')"
 ```
 
-5. Verify:
+5. Add to .gitignore if not already there:
 ```bash
-python3 -c "import json; d=json.load(open('.claude/repo-intel.json')); print(f'{len(d.get(\"symbols\",{}))} files indexed')"
-```
-
-6. Add to .gitignore if not already there:
-```bash
-grep -q 'repo-intel.json' .gitignore 2>/dev/null || echo '.claude/repo-intel.json' >> .gitignore
+grep -q 'repo-intel' .gitignore 2>/dev/null || echo '.claude/repo-intel.json' >> .gitignore
 ```
 
 ## Rules
 
-- Always check if binary exists before running.
-- The repo intel map is a LOCAL cache — never commit it.
+- The map is a LOCAL cache — never commit it.
+- For incremental updates: `~/.agent-sh/bin/agent-analyzer repo-intel update --map-file .claude/repo-intel.json .`

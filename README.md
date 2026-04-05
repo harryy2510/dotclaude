@@ -33,7 +33,7 @@
 │                                                                            │
 │   claude plugin marketplace add harryy2510/dotclaude                       │
 │   claude plugin install dotclaude@dotclaude                                │
-│   /dotclaude:dotclaude-setup                                               │
+│   /dotclaude:setup                                                 │
 │                                                                            │
 │   That's it. Every project. Every agent. Same standards.                   │
 │                                                                            │
@@ -103,9 +103,9 @@ Type these directly in Claude Code:
 | `/repo-map` | 🗺️ Runs agent-analyzer → builds symbol index → saves to `.claude/repo-map.json` |
 | `/deslop` | 🧹 Scans codebase for slop → reports findings → offers to fix |
 | `/skill-lint` | ✅ Validates skills + agents → checks frontmatter, size, refs, triggers |
-| `/dotclaude:dotclaude-setup` | 🔧 One-time: copies conventions to `~/.claude/CLAUDE.md` + installs agent-analyzer |
-| `/dotclaude:dotclaude-update` | 🔄 Updates plugin + refreshes CLAUDE.md conventions |
-| `/dotclaude:dotclaude-uninstall` | 🗑️ Removes DotClaude conventions from CLAUDE.md |
+| `/dotclaude:setup` | 🔧 One-time: copies conventions to `~/.claude/CLAUDE.md` + installs agent-analyzer |
+| `/dotclaude:update` | 🔄 Updates plugin + refreshes CLAUDE.md conventions |
+| `/dotclaude:uninstall` | 🗑️ Removes DotClaude conventions from CLAUDE.md |
 
 ```
   /deslop src/              ← you type this
@@ -220,7 +220,7 @@ claude plugin marketplace add harryy2510/dotclaude
 claude plugin install dotclaude@dotclaude
 
 # 3. Run setup in Claude Code
-/dotclaude:dotclaude-setup
+/dotclaude:setup
 ```
 
 ### Update
@@ -229,11 +229,11 @@ claude plugin install dotclaude@dotclaude
 claude plugin update dotclaude@dotclaude
 ```
 
-Or from Claude Code: `/dotclaude:dotclaude-update`
+Or from Claude Code: `/dotclaude:update`
 
 ### Uninstall
 
-Run `/dotclaude:dotclaude-uninstall` first (removes conventions from CLAUDE.md), then:
+Run `/dotclaude:uninstall` first (removes conventions from CLAUDE.md), then:
 
 ```bash
 claude plugin uninstall dotclaude@dotclaude
@@ -246,13 +246,13 @@ claude plugin uninstall dotclaude@dotclaude
   plugin install              →  Clones + caches in ~/.claude/plugins/cache/
                                  Skills, agents, commands available immediately
 
-  /dotclaude:dotclaude-setup →  Conventions copied to ~/.claude/CLAUDE.md
+  /dotclaude:setup →  Conventions copied to ~/.claude/CLAUDE.md
                                  agent-analyzer binary installed
 
   plugin update              →  Plugin cache refreshed from git
-  /dotclaude:dotclaude-update → Same + refreshes CLAUDE.md conventions
+  /dotclaude:update → Same + refreshes CLAUDE.md conventions
 
-  /dotclaude:dotclaude-uninstall → Removes conventions from ~/.claude/CLAUDE.md
+  /dotclaude:uninstall → Removes conventions from ~/.claude/CLAUDE.md
   plugin uninstall              →  Removes plugin from cache
 ```
 

@@ -31,7 +31,7 @@
 ```
 ┌────────────────────────────────────────────────────────────────────────────┐
 │                                                                            │
-│   claude plugin marketplace add harryy2510/dotclaude                │
+│   claude plugin marketplace add harryy2510/dotclaude                       │
 │   claude plugin install DotClaude                                          │
 │   /dotclaude:setup                                                         │
 │                                                                            │

@@ -5,7 +5,7 @@ description: "Use when exploring a new codebase, onboarding to a repo, or needin
 
 # Repo Map — agent-analyzer
 
-Generates a symbol index of any codebase using the `agent-analyzer` Rust binary. Gives agents a map of the codebase (functions, exports, imports, call graphs) without reading every file. Saves massive context.
+Generates a symbol index of any codebase using the `agent-analyzer` Rust binary. Gives agents a map of the codebase (functions, exports, imports) without reading every file. Saves massive context.
 
 ## First-Time Setup
 
@@ -19,31 +19,27 @@ This downloads `agent-analyzer` from [agent-sh/agent-analyzer](https://github.co
 
 ## Usage
 
-### Generate full repo map
+### Generate repo map
 ```bash
-~/.agent-sh/bin/agent-analyzer scan . --format json > .claude/repo-map.json
+~/.agent-sh/bin/agent-analyzer repo-map generate . > .claude/repo-map.json
 ```
 
-### Incremental update (only changed files)
+### Available commands
 ```bash
-~/.agent-sh/bin/agent-analyzer scan . --format json --incremental --cache .claude/repo-map.json > .claude/repo-map.json
-```
+# Full repo intelligence (extraction + aggregation)
+~/.agent-sh/bin/agent-analyzer repo-intel extract .
+~/.agent-sh/bin/agent-analyzer repo-intel aggregate .
 
-### Query symbols
-```bash
-# Find all exports
-~/.agent-sh/bin/agent-analyzer query .claude/repo-map.json --exports
+# Project data collection
+~/.agent-sh/bin/agent-analyzer collect .
 
-# Find function definitions
-~/.agent-sh/bin/agent-analyzer query .claude/repo-map.json --functions
-
-# Find imports of a specific module
-~/.agent-sh/bin/agent-analyzer query .claude/repo-map.json --imports-of "src/utils"
+# Doc-code sync analysis
+~/.agent-sh/bin/agent-analyzer sync-check .
 ```
 
 ## When to Use
 
-- **Onboarding to a new repo** — scan first, then ask targeted questions
+- **Onboarding to a new repo** — generate map first, then ask targeted questions
 - **Large refactors** — find all callers/importers of a function before changing it
 - **Architecture review** — understand module boundaries and dependency flow
 - **Before implementing** — check what already exists to avoid duplication
@@ -54,8 +50,7 @@ Add to project's `package.json` scripts:
 
 ```json
 {
-  "repo-map": "~/.agent-sh/bin/agent-analyzer scan . --format json > .claude/repo-map.json",
-  "repo-map:update": "~/.agent-sh/bin/agent-analyzer scan . --format json --incremental --cache .claude/repo-map.json > .claude/repo-map.json"
+  "repo-map": "~/.agent-sh/bin/agent-analyzer repo-map generate . > .claude/repo-map.json"
 }
 ```
 

@@ -24,15 +24,15 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/install-repo-map.sh"
 mkdir -p .claude
 ```
 
-4. Run the scan on the target path (default: current directory):
+4. Run the repo map generator on the target path (default: current directory):
 ```bash
-~/.agent-sh/bin/agent-analyzer scan ${ARGUMENT:-.} --format json > .claude/repo-map.json
+~/.agent-sh/bin/agent-analyzer repo-map generate ${ARGUMENT:-.} > .claude/repo-map.json
 ```
 
 5. Report results:
 ```bash
 echo "Repo map saved to .claude/repo-map.json"
-wc -l .claude/repo-map.json | awk '{print $1 " lines indexed"}'
+wc -l .claude/repo-map.json | awk '{print $1 " lines"}'
 ```
 
 6. Add to .gitignore if not already there:

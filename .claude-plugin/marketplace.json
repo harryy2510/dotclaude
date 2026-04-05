@@ -10,7 +10,7 @@
     {
       "name": "DotClaude",
       "description": "Code conventions, agents, and tooling. ESLint/Prettier enforcement, repo-map, deslop, 8-phase agent orchestration.",
-      "source": "./",
+      "source": "./plugins/dotclaude",
       "category": "development"
     }
   ]

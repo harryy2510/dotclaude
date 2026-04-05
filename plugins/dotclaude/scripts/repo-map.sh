@@ -1,28 +1,34 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# repo-map.sh — Generate repo intelligence map using agent-analyzer
-# Usage: repo-map.sh [path]
+# repo-map.sh — Generate repo map using agent-analyzer
+# Replicates agentsys/lib/repo-map flow:
+#   1. Run agent-analyzer repo-intel init → stdout is JSON
+#   2. Save raw intel to .claude/repo-intel.json
+#   3. Convert to repo-map format → save to .claude/repo-map.json
 
 TARGET="${1:-.}"
 BINARY="$HOME/.agent-sh/bin/agent-analyzer"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-OUTPUT=".claude/repo-intel.json"
+STATE_DIR=".claude"
 
 # Install binary if missing
 if [ ! -x "$BINARY" ]; then
 	bash "$SCRIPT_DIR/install-repo-map.sh"
 fi
 
-# Generate
-mkdir -p .claude
-echo "Generating repo intel map for $TARGET..."
-$BINARY repo-intel init "$TARGET" --max-commits 200 2>/dev/null > "$OUTPUT"
+mkdir -p "$STATE_DIR"
 
-# Verify
-python3 -c "import json; d=json.load(open('$OUTPUT')); print(f'{len(d.get(\"symbols\",{}))} files, {d.get(\"git\",{}).get(\"totalCommitsAnalyzed\",0)} commits analyzed')"
+# Step 1+2: Run agent-analyzer, save raw intel JSON
+echo "Scanning $TARGET..."
+$BINARY repo-intel init "$TARGET" --max-commits 200 > "$STATE_DIR/repo-intel.json"
 
-# Gitignore
-grep -q 'repo-intel' .gitignore 2>/dev/null || echo '.claude/repo-intel.json' >> .gitignore
+# Step 3: Convert raw intel to repo-map format (replicates agentsys converter.js)
+python3 "$SCRIPT_DIR/convert-repo-map.py" "$STATE_DIR/repo-intel.json" "$STATE_DIR/repo-map.json"
 
-echo "[OK] Saved to $OUTPUT"
+# Step 4: Gitignore
+for f in repo-intel.json repo-map.json; do
+	grep -q "$f" .gitignore 2>/dev/null || echo "$STATE_DIR/$f" >> .gitignore
+done
+
+echo "[OK] Saved $STATE_DIR/repo-intel.json + $STATE_DIR/repo-map.json"

@@ -71,24 +71,24 @@ Loaded on-demand. Only the relevant skill enters context — the rest cost 0 tok
 **19 specialists. All under 80 lines. Pure signal, no fluff.**
 
 ```
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║  💻 ENGINEERING          🧪 TESTING         📋 PRODUCT       ║
-║  ─────────────           ─────────          ──────────       ║
-║  Backend Architect       API Tester         Product Manager  ║
-║  Frontend Developer      Perf Benchmarker   UX Architect     ║
-║  Senior Developer        E2E Test Writer                     ║
-║  Database Optimizer      E2E Test Runner    🎛️ ORCHESTRATION  ║
-║  DevOps Automator                           ────────────────  ║
-║  Security Engineer                          Agents            ║
-║  Rapid Prototyper                           Orchestrator      ║
-║  Software Architect                         (8-phase          ║
-║  Code Reviewer                               workflow)        ║
-║  Git Workflow Master                                         ║
-║  Technical Writer                                            ║
-║  MCP Builder                                                 ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
+╔══════════════════════════════════════════════════════════════════════╗
+║                                                                      ║
+║  💻 ENGINEERING          🧪 TESTING         📋 PRODUCT              ║
+║  ─────────────           ─────────          ──────────               ║
+║  Backend Architect       API Tester         Product Manager          ║
+║  Frontend Developer      Perf Benchmarker   UX Architect             ║
+║  Senior Developer        E2E Test Writer                             ║
+║  Database Optimizer      E2E Test Runner    🎛️ ORCHESTRATION         ║
+║  DevOps Automator                           ────────────────         ║
+║  Security Engineer                          Agents                   ║
+║  Rapid Prototyper                           Orchestrator             ║
+║  Software Architect                         (8-phase workflow)       ║
+║  Code Reviewer                                                       ║
+║  Git Workflow Master                                                 ║
+║  Technical Writer                                                    ║
+║  MCP Builder                                                         ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
 ```
 
 ---

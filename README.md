@@ -31,7 +31,7 @@
 ```
 ┌────────────────────────────────────────────────────────────────────────────┐
 │                                                                            │
-│   claude plugin marketplace add github:harryy2510/dotclaude                │
+│   claude plugin marketplace add harryy2510/dotclaude                │
 │   claude plugin install DotClaude                                          │
 │   /dotclaude:setup                                                         │
 │                                                                            │
@@ -214,7 +214,7 @@ Uses Claude Code's native plugin system. No custom scripts needed.
 
 ```bash
 # 1. Add as a marketplace
-claude plugin marketplace add github:harryy2510/dotclaude
+claude plugin marketplace add harryy2510/dotclaude
 
 # 2. Install the plugin
 claude plugin install DotClaude

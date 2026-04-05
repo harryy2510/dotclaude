@@ -29,14 +29,15 @@
 ---
 
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                                                              │
-│   Install:  claude plugin add github:harryy2510/dotclaude    │
-│   Setup:    /dotclaude:setup                                 │
-│                                                              │
-│   That's it. Every project. Every agent. Same standards.     │
-│                                                              │
-└──────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────┐
+│                                                                            │
+│   claude plugin marketplace add github:harryy2510/dotclaude                │
+│   claude plugin install DotClaude                                          │
+│   /dotclaude:setup                                                         │
+│                                                                            │
+│   That's it. Every project. Every agent. Same standards.                   │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -212,10 +213,15 @@ Uses Claude Code's native plugin system. No custom scripts needed.
 ### Install
 
 ```bash
-claude plugin add github:harryy2510/dotclaude
-```
+# 1. Add as a marketplace
+claude plugin marketplace add github:harryy2510/dotclaude
 
-Then run `/dotclaude:setup` in Claude Code to copy conventions to `~/.claude/CLAUDE.md` and install agent-analyzer.
+# 2. Install the plugin
+claude plugin install DotClaude
+
+# 3. Run setup in Claude Code
+/dotclaude:setup
+```
 
 ### Update
 
@@ -230,23 +236,24 @@ Or from Claude Code: `/dotclaude:update`
 Run `/dotclaude:teardown` first (removes conventions from CLAUDE.md), then:
 
 ```bash
-claude plugin remove DotClaude
+claude plugin uninstall DotClaude
 ```
 
 ### What happens where
 
 ```
-  claude plugin add         →  Plugin cached in ~/.claude/plugins/cache/
+  marketplace add           →  Registers the repo as a plugin source
+  plugin install            →  Clones + caches in ~/.claude/plugins/cache/
                                Skills, agents, commands available immediately
 
   /dotclaude:setup          →  Conventions copied to ~/.claude/CLAUDE.md
                                agent-analyzer binary installed
 
-  claude plugin update      →  Plugin cache refreshed from git
+  plugin update             →  Plugin cache refreshed from git
   /dotclaude:update         →  Same + refreshes CLAUDE.md conventions
 
   /dotclaude:teardown       →  Removes conventions from ~/.claude/CLAUDE.md
-  claude plugin remove      →  Removes plugin from cache
+  plugin uninstall          →  Removes plugin from cache
 ```
 
 ---

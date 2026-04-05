@@ -3,14 +3,14 @@
   "name": "dotclaude",
   "description": "DotClaude — conventions, agents, and tooling for all projects",
   "owner": {
-    "name": "Hariom Balhara",
+    "name": "Hariom Sharma",
     "email": "harryy2510@gmail.com"
   },
   "plugins": [
     {
       "name": "DotClaude",
       "description": "Code conventions, agents, and tooling. ESLint/Prettier enforcement, repo-map, deslop, 8-phase agent orchestration.",
-      "source": ".",
+      "source": "./",
       "category": "development"
     }
   ]

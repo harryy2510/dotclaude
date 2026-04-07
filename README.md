@@ -34,7 +34,7 @@
 ┌────────────────────────────────────────────────────────────────────────────┐
 │                                                                            │
 │   claude plugin marketplace add harryy2510/claude-toolkit                  │
-│   claude plugin install claude-toolkit@dotclaude                           │
+│   claude plugin install dotclaude@claude-toolkit                           │
 │   /dotclaude:setup                                                 │
 │                                                                            │
 │   That's it. Every project. Every agent. Same standards.                   │
@@ -217,7 +217,7 @@ Uses Claude Code's native plugin system. No custom scripts needed.
 claude plugin marketplace add harryy2510/claude-toolkit
 
 # 2. Install the plugin
-claude plugin install claude-toolkit@dotclaude
+claude plugin install dotclaude@claude-toolkit
 
 # 3. Run setup in Claude Code
 /dotclaude:setup
@@ -227,7 +227,7 @@ claude plugin install claude-toolkit@dotclaude
 
 ```bash
 claude plugin marketplace update claude-toolkit
-claude plugin update claude-toolkit@dotclaude
+claude plugin update dotclaude@claude-toolkit
 ```
 
 The marketplace update fetches the latest claude-toolkit index. The plugin update pulls the new version. Both steps needed.
@@ -239,7 +239,7 @@ Or from Claude Code: `/dotclaude:update`
 Run `/dotclaude:uninstall` first (removes conventions from CLAUDE.md), then:
 
 ```bash
-claude plugin uninstall claude-toolkit@dotclaude
+claude plugin uninstall dotclaude@claude-toolkit
 ```
 
 ### What happens where

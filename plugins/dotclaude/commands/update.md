@@ -5,7 +5,7 @@ description: Update DotClaude plugin to latest version and refresh CLAUDE.md con
 Update the plugin and re-run setup:
 
 ```bash
-claude plugin marketplace update claude-toolkit && claude plugin update claude-toolkit@dotclaude
+claude plugin marketplace update claude-toolkit && claude plugin update dotclaude@claude-toolkit
 ```
 
 Then refresh conventions:

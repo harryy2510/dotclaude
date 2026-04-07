@@ -28,11 +28,13 @@
 
 ---
 
+> **Note:** DotClaude is distributed through the [claude-toolkit](https://github.com/harryy2510/claude-toolkit) marketplace.
+
 ```
 ┌────────────────────────────────────────────────────────────────────────────┐
 │                                                                            │
-│   claude plugin marketplace add harryy2510/dotclaude                       │
-│   claude plugin install dotclaude@dotclaude                                │
+│   claude plugin marketplace add harryy2510/claude-toolkit                  │
+│   claude plugin install claude-toolkit@dotclaude                           │
 │   /dotclaude:setup                                                 │
 │                                                                            │
 │   That's it. Every project. Every agent. Same standards.                   │
@@ -174,8 +176,6 @@ The `agents-orchestrator` enforces an 8-phase workflow:
 
 ```
 dotclaude/
-├── .claude-plugin/
-│   └── plugin.json          ← Plugin manifest
 ├── CLAUDE.md                ← Conventions (copied to ~/.claude/CLAUDE.md by /dotclaude:setup)
 ├── agents/                  ← 19 specialist agents
 │   ├── agents-orchestrator.md
@@ -213,11 +213,11 @@ Uses Claude Code's native plugin system. No custom scripts needed.
 ### Install
 
 ```bash
-# 1. Add as a marketplace
-claude plugin marketplace add harryy2510/dotclaude
+# 1. Add the marketplace
+claude plugin marketplace add harryy2510/claude-toolkit
 
 # 2. Install the plugin
-claude plugin install dotclaude@dotclaude
+claude plugin install claude-toolkit@dotclaude
 
 # 3. Run setup in Claude Code
 /dotclaude:setup
@@ -226,11 +226,11 @@ claude plugin install dotclaude@dotclaude
 ### Update
 
 ```bash
-claude plugin marketplace update dotclaude
-claude plugin update dotclaude@dotclaude
+claude plugin marketplace update claude-toolkit
+claude plugin update claude-toolkit@dotclaude
 ```
 
-The marketplace update fetches the latest index. The plugin update pulls the new version. Both steps needed.
+The marketplace update fetches the latest claude-toolkit index. The plugin update pulls the new version. Both steps needed.
 
 Or from Claude Code: `/dotclaude:update`
 
@@ -239,14 +239,14 @@ Or from Claude Code: `/dotclaude:update`
 Run `/dotclaude:uninstall` first (removes conventions from CLAUDE.md), then:
 
 ```bash
-claude plugin uninstall dotclaude@dotclaude
+claude plugin uninstall claude-toolkit@dotclaude
 ```
 
 ### What happens where
 
 ```
-  marketplace add           →  Registers the repo as a plugin source
-  plugin install              →  Clones + caches in ~/.claude/plugins/cache/
+  marketplace add           →  Registers harryy2510/claude-toolkit as a plugin source
+  plugin install              →  Installs dotclaude from the marketplace
                                  Skills, agents, commands available immediately
 
   /dotclaude:setup →  Conventions copied to ~/.claude/CLAUDE.md
@@ -312,7 +312,3 @@ The plugin follows its own conventions:
 ```
 
 ---
-
-<p align="center">
-  <sub>🔒 Private. Not for distribution outside the team.</sub>
-</p>

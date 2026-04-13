@@ -1,3 +1,4 @@
+<!-- DOTCLAUDE:START -->
 # Global Rules — All Projects
 
 These rules apply to EVERY session, EVERY project, EVERY agent.
@@ -191,3 +192,4 @@ Four files per domain in `src/api/<domain>/`:
 ### General
 - `@/*` path alias = `src/*`.
 - Run the project's check command before considering work complete.
+<!-- DOTCLAUDE:END -->

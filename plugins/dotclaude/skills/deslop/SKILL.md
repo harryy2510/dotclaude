@@ -28,7 +28,7 @@ bash scripts/deslop.sh --staged
 
 ### Critical (auto-fix: flag)
 - **Hardcoded secrets** — API keys, tokens, passwords, JWT, AWS/GCP/Stripe credentials
-- **Placeholder code** — `throw new Error("TODO")`, empty functions, `pass`-only Python functions
+- **Placeholder code** — `throw new Error("...")` stubs, empty functions, `pass`-only Python functions
 - **Empty error handling** — `catch {}`, `except: pass`
 
 ### Medium (auto-fix: remove/flag)
@@ -37,7 +37,7 @@ bash scripts/deslop.sh --staged
 - **Bare `.unwrap()` in Rust** — should use `.expect()` or `?` operator
 
 ### Low (auto-fix: flag)
-- **TODO/FIXME comments** — stale placeholders
+- **Stale task-marker comments** — unfinished placeholders left in code
 - **Disabled linter rules** — `eslint-disable`, `noqa`, `#[allow()]`
 - **Mixed indentation** — tabs + spaces
 

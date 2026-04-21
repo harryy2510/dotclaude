@@ -3,3 +3,5 @@
 *.swo
 *~
 .remember
+.idea
+.vscode

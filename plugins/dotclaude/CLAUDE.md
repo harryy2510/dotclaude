@@ -149,6 +149,7 @@ Four files per domain in `src/api/<domain>/`:
 - `worker-configuration.d.ts` and `database.types.ts` are auto-generated -- NEVER edit (enforced by pre-commit hook).
 - Use `.overrideTypes<T>()` for new/incomplete types: object form for `.single()`/`.maybeSingle()`, Array form otherwise.
 - `onAuthStateChange` listener mounted exactly once in the root shell.
+- **Edge Functions:** always call via `supabase.functions.invoke()` -- never `fetch`/`axios` directly. Exception: streaming Edge Functions where `invoke()` doesn't support streaming.
 
 ### Database & Migrations
 - Never run direct SQL. All changes through migration files only.

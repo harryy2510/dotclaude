@@ -4,7 +4,7 @@
     <strong>Your entire Claude Code setup — skills, agents, commands, tooling — in one plugin.</strong>
   </p>
   <p align="center">
-    <code>16 skills</code> · <code>19 agents</code> · <code>6 commands</code> · <code>zero bloat</code>
+    <code>17 skills</code> · <code>19 agents</code> · <code>6 commands</code> · <code>zero bloat</code>
   </p>
 </p>
 
@@ -66,6 +66,7 @@ Loaded on-demand. Only the relevant skill enters context — the rest cost 0 tok
 | 🗄️ | `supabase-postgres-best-practices` | Indexing, query plans, RLS perf, connection pooling |
 | 🗺️ | `repo-map` | agent-analyzer symbol index — map a codebase without reading every file |
 | 🧹 | `deslop` | Detect AI-generated slop — debug stmts, placeholders, hardcoded secrets |
+| 🧪 | `testing` | Vitest + Testing Library + Playwright, file conventions, what to test |
 
 ---
 

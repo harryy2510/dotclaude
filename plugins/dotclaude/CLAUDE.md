@@ -27,6 +27,7 @@ Before writing any code, check if a relevant skill exists by reading the skill f
 | Vite config | `vite` — Vite build tool, plugin API, SSR, Rolldown migration |
 | Exploring a new codebase | `repo-map` — agent-analyzer symbol index (functions, exports, imports) |
 | Code quality scan | `deslop` — detect AI-generated slop patterns (debug stmts, placeholders, secrets) |
+| Testing | `testing` — Vitest + Testing Library + Playwright, file conventions, what to test |
 
 ## Hard Rules (Non-Negotiable)
 

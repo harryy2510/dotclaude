@@ -132,25 +132,43 @@ For full playbook (scripts, file architecture, wrangler cleanup, dashboard clean
 
 ## 3. CI/CD (GitHub Actions)
 
+### Architecture: Reusable Workflows
+
+Deploy workflows live in a shared infra repo and are consumed via `workflow_call`. Projects define thin callers with `uses: YourOrg/infra/.github/workflows/<workflow>.yml@main` and `secrets: inherit`. See `references/github-actions.md` for caller examples.
+
+### Environment Tier Detection
+
+Workflows auto-detect the project's env tier before syncing secrets:
+
+| Tier | Condition | Keys needed |
+|------|-----------|-------------|
+| `multi` | `.env.development` and/or `.env.production` exist | `DOTENV_PRIVATE_KEY_DEVELOPMENT`, `DOTENV_PRIVATE_KEY_PRODUCTION` |
+| `single` | Only `.env` exists | `DOTENV_PRIVATE_KEY` |
+| `none` | No env files | (skip sync) |
+
 ### Cloudflare Deploy (`cloudflare-deploy.yml`)
 
-- Triggers on push to main (excluding `supabase/**`) + manual dispatch
-- Matrix strategy deploys both environments on push, selected environment on dispatch
-- Steps: checkout -> bun install -> `bun sync-env cloudflare` -> build with `--mode ${{ matrix.environment }}` -> `wrangler deploy`
-- **Critical**: `--mode` tells Vite which `.env.*` to load. Without it, always loads `.env.production`.
+- Reusable `workflow_call` with inputs: `environment`, `working_directory`, `pre_deploy_commands`, `skip_build`, `skip_sync_env`
+- Uses `cloudflare/wrangler-action@v3` for deploy (not raw `bunx wrangler deploy`)
+- **Preview deploys**: On PRs, uploads a preview version via `wrangler versions upload --preview-alias pr-N` and comments the preview URL on the PR
+- Steps: checkout -> setup Node.js 24 + bun -> install -> detect env tier -> sync secrets -> build with `--mode` -> deploy/preview
+- **Critical**: `--mode ${{ inputs.environment }}` tells Vite which `.env.*` to load. Without it, always loads `.env.production`.
 
 ### Supabase Deploy (`supabase-deploy.yml`)
 
-- Triggers on push to main (only `supabase/**` changes) + manual dispatch
+- Reusable `workflow_call` with inputs: `environment`, `deploy_migrations`, `deploy_functions`, `working_directory`
 - Loads env vars from decrypted `.env.*` into `GITHUB_ENV` (skips `NODE_OPTIONS`, `VITE_*`, `DOTENV_*`)
-- Steps: checkout (fetch-depth 0) -> bun install -> load env -> supabase link -> sync secrets -> config push -> db push
+- **Masks secrets**: uses `::add-mask::$value` before writing to `GITHUB_ENV`
+- Steps: checkout (fetch-depth 0) -> setup Node.js 24 + bun -> install -> resolve env file -> load env -> supabase link -> sync secrets -> config push -> db push -> deploy functions -> tag deployment
 - `fetch-depth: 0` required for migration history
 
 ### Shared Patterns
 
 - Both use concurrency groups with `cancel-in-progress: false` (never cancel deploys mid-flight)
-- Both use the same matrix expression for flexible environment targeting
+- Both include `actions/setup-node@v6` with `node-version: '24'` (required for some tooling)
 - Both decrypt env files via `postinstall` during `bun install`
+- Both support single-env and multi-env projects via tier detection
+- Uses `@utilities-studio/sync-env@latest` for secret syncing (not local `bun sync-env`)
 
 For full workflow YAML templates: `references/github-actions.md`
 
@@ -165,12 +183,12 @@ For full workflow YAML templates: `references/github-actions.md`
 
 ## Gotchas
 
-- **postinstall `;` not `&&`**: CI jobs have environment-scoped keys. `&&` short-circuits if first decrypt fails.
-- **Empty files on failed decrypt**: `> file` creates empty file even on error. `; true` handles this.
+- **postinstall `;` not `&&`**: CI jobs have environment-scoped keys. `&&` short-circuits if first decrypt fails. End with `; true`.
 - **Vite mode**: `vite build` defaults to `mode: production`. Dev deploys MUST pass `--mode development`.
 - **`wrangler versions secret bulk`**: Individual `secret put` calls race and silently drop secrets.
-- **GITHUB_ENV quoted values**: `NODE_OPTIONS="--max-old-space-size=4096"` triggers GitHub output parameter detection. Skip in env loader.
-- **Cloudflare Workers need runtime secrets**: Workers read `env` at request time. Must push actual secrets via `wrangler secret`.
+- **GITHUB_ENV**: Skip `NODE_OPTIONS` (quoted values break it). Always `::add-mask::$value` before writing secrets.
 - **Supabase auto-scan limitation**: Only picks up literal `Deno.env.get('KEY')`. Dynamic key access won't be detected.
+- **Node.js in CI**: Always include `actions/setup-node@v6` with `node-version: '24'` alongside bun.
+- **`cloudflare/wrangler-action@v3`**: Prefer over raw `bunx wrangler deploy` -- handles API token setup and output parsing.
 - **Reusable vs composite actions**: Don't mix these up when answering GitHub Actions questions.
 - **OIDC over long-lived credentials**: Prefer OIDC when GitHub docs support it for the target cloud.

@@ -79,7 +79,7 @@ Do not use em dashes anywhere when generating text content. Use `--` or rewrite 
 - Use `flex` + `gap-*`, never `space-x-*`/`space-y-*`. Use `size-*` when width=height. Use `truncate` shorthand.
 - `className` on shadcn components is for layout only -- never override component colors/typography.
 - Forms use `FieldGroup` + `Field`. `InputGroup` uses `InputGroupInput`/`InputGroupTextarea` (never raw `Input` inside). Buttons inside inputs use `InputGroupAddon`.
-- Dialog/Sheet/Drawer always need a Title (use `sr-only` if hidden). Avatar always needs `AvatarFallback`.
+- Dialog/Sheet/Drawer always need a Title (use `sr-only` if hidden). Dialog/AlertDialog content must include `max-h-[90vh] overflow-y-auto` to prevent viewport overflow. Avatar always needs `AvatarFallback`.
 - Button has no `isPending`/`isLoading` prop -- compose with Spinner + `data-icon` + `disabled`.
 - Icons in Button use `data-icon="inline-start|inline-end"`; no sizing classes on icons inside components.
 - Option sets (2-7) use `ToggleGroup`, not looped Button with manual active state.
@@ -102,6 +102,7 @@ Do not use em dashes anywhere when generating text content. Use `--` or rewrite 
 - QueryClient defaults: `gcTime: Infinity`, `refetchOnMount: false`, `refetchOnWindowFocus: false`, `retry: false`.
 - Global `MutationCache.onError` + `QueryCache.onError` wired to sonner `toast.error`.
 - Optimistic updates go through `libs/query/optimistic.ts` using `create()` from `mutative`. Never hand-rolled `setQueryData` with spread.
+- Use `refetchQueries` (not `invalidateQueries`) when the user navigates away after mutating and the destination list must already have fresh data. Use `invalidateQueries` when staying on the same page.
 - Rapid successive mutations: share a `mutationKey`, guard with `isMutating()`, call `router.invalidate()` in `onSettled`.
 
 ### Forms
@@ -149,7 +150,8 @@ Four files per domain in `src/api/<domain>/`:
 - `worker-configuration.d.ts` and `database.types.ts` are auto-generated -- NEVER edit (enforced by pre-commit hook).
 - Use `.overrideTypes<T>()` for new/incomplete types: object form for `.single()`/`.maybeSingle()`, Array form otherwise.
 - `onAuthStateChange` listener mounted exactly once in the root shell.
-- **Edge Functions:** always call via `supabase.functions.invoke()` -- never `fetch`/`axios` directly. Exception: streaming Edge Functions where `invoke()` doesn't support streaming.
+- **Calling Edge Functions** (from client/server code): always use `supabase.functions.invoke()` -- never `fetch`/`axios` directly. Exception: streaming Edge Functions where `invoke()` doesn't support streaming.
+- **Inside Edge Functions** (calling external APIs): use `fetch` directly (Deno runtime). Shared utilities go in `supabase/functions/_shared/`.
 
 ### Database & Migrations
 - Never run direct SQL. All changes through migration files only.

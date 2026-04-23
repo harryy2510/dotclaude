@@ -58,6 +58,7 @@ Each file has: why it matters, incorrect/correct SQL, EXPLAIN output, Supabase-s
 - `references/security-rls-basics.md` — Row-Level Security fundamentals
 - `references/security-rls-performance.md` — RLS performance pitfalls
 - `references/security-privileges.md` — role and grant management
+- `references/security-search-path.md` — SET search_path on SQL functions to prevent injection
 
 ### Schema Design (High)
 - `references/schema-primary-keys.md` — PK selection and performance

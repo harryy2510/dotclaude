@@ -163,6 +163,7 @@ Four files per domain in `src/api/<domain>/`:
 - Use cursor-based pagination, not `OFFSET`, for large lists.
 - Use `ON CONFLICT` upserts -- never SELECT-then-INSERT.
 - Use `FOR UPDATE SKIP LOCKED` for queue processing.
+- SQL functions must `SET search_path = ''` (or explicit schemas). Schema-qualify all references (`public.users`, `auth.uid()`). Prevents search_path injection.
 
 ### Cloudflare Workers
 - Set `compatibility_date` on new projects. Enable `nodejs_compat`. Generate `Env` via `bunx wrangler types` -- never hand-write binding interfaces.
@@ -181,7 +182,10 @@ Four files per domain in `src/api/<domain>/`:
 - `vite.config.ts` + TypeScript. ESM only, never CommonJS.
 - Vite build for dev deploys MUST pass `--mode development`; otherwise it defaults to production.
 - Use `wrangler versions secret bulk` for secret sync. Never individual `wrangler secret put` in CI (races).
-- GitHub Actions deploys use `concurrency.cancel-in-progress: false`. Supabase workflow requires `fetch-depth: 0`.
+- GitHub Actions deploys use reusable `workflow_call` workflows from shared infra repo. `concurrency.cancel-in-progress: false`. Supabase workflow requires `fetch-depth: 0`.
+- CI workflows include `actions/setup-node@v6` (node 24) + `oven-sh/setup-bun@v2`. Use `cloudflare/wrangler-action@v3` for deploys.
+- Env tier detection: workflows auto-detect `multi` (`.env.development`/`.env.production`), `single` (`.env`), or `none`. Use `DOTENV_PRIVATE_KEY` for single-tier, `DOTENV_PRIVATE_KEY_{DEVELOPMENT,PRODUCTION}` for multi-tier.
+- Mask secrets in CI: always `::add-mask::$value` before writing to `GITHUB_ENV`.
 
 ### Pre-commit Enforcement (do not bypass)
 - Blocks `.js`/`.jsx` files in `src/`.

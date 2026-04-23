@@ -125,6 +125,14 @@ toast("File deleted.", {
 
 ---
 
+## Dialog and AlertDialog must constrain height
+
+Always include `max-h-[90vh] overflow-y-auto` on `DialogContent` and `AlertDialogContent` to prevent viewport overflow on small screens or with dynamic content.
+
+This is already baked into the base component classes -- do not remove it. If building a custom overlay, apply the same constraint.
+
+---
+
 ## Card structure
 
 Use full composition — don't dump everything into `CardContent`:

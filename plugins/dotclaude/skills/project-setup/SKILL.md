@@ -172,6 +172,10 @@ Workflows auto-detect the project's env tier before syncing secrets:
 
 For full workflow YAML templates: `references/github-actions.md`
 
+### Claude Code Workflows
+
+Claude Code workflows (`claude.yml`, `claude-code-review.yml`) follow the same delegation pattern -- thin callers in each repo that `uses:` shared templates from the infra repo, passing only `CLAUDE_CODE_OAUTH_TOKEN`. Required permissions: `contents: write`, `pull-requests: write`, `issues: write`, `id-token: write`, `actions: read`.
+
 ### Answering GitHub Actions Questions
 
 1. Classify the question (syntax, runners, security, deployments, migration, etc.)

@@ -62,6 +62,28 @@ description: "Use when working with Supabase clients, authentication, database t
 - Per-environment: `.env.development`, `.env.production`.
 - Local overrides: `.env.development.local` (gitignored).
 
+## Edge Function Patterns
+
+### Shared modules
+
+Place shared utilities in `supabase/functions/_shared/`. Functions import with relative paths:
+
+```typescript
+// supabase/functions/_shared/constants.ts
+export const NOREPLY_EMAIL = 'noreply@example.com'
+export async function sendEmail(params: { html: string; subject: string; to: string | string[] }) {
+  // shared utility
+}
+
+// supabase/functions/send-email/index.ts
+import { sendEmail } from '../_shared/constants.ts'
+```
+
+### Calling Edge Functions vs calling from Edge Functions
+
+- **Client/server code calling an Edge Function**: always use `supabase.functions.invoke()` -- never raw `fetch`/`axios`. Exception: streaming responses where `invoke()` doesn't support streaming.
+- **Edge Function calling external APIs**: use `fetch` directly (Deno runtime). This is the normal way to reach third-party services (email APIs, webhooks, etc.) from within a function.
+
 ## Rules
 
 - Database types are single source of truth — never hand-roll types duplicating DB columns.

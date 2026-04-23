@@ -12,7 +12,7 @@ File: `libs/query/root-provider.tsx`
 - `refetchOnMount: false`
 - `refetchOnWindowFocus: false`
 - `retry: false`
-- Manual freshness control: call `invalidateQueries` or `setQueryData` in mutation `onSuccess`
+- Manual freshness control: call `invalidateQueries`, `refetchQueries`, or `setQueryData` in mutation callbacks
 - Global `MutationCache.onError` → `toast.error(error.message)` via sonner
 - Global `QueryCache.onError` → `toast.error(error.message)` for failed queries
 
@@ -80,6 +80,21 @@ export function rollback(...fns: RollbackFn[]) {
 export function settle(queryClient: QueryClient, queryKeys: QueryKey[]) {
   return () => queryKeys.forEach((key) => queryClient.invalidateQueries({ queryKey: key }))
 }
+```
+
+## invalidateQueries vs refetchQueries
+
+- **`invalidateQueries`**: Marks queries as stale. They refetch on next mount or access. Use for most mutations where the user stays on the same page.
+- **`refetchQueries`**: Immediately re-runs the query, even if no component is mounted for it. Use when the user navigates away after mutating (e.g., create-then-redirect) and the list they return to must already have fresh data.
+
+```typescript
+// Create → redirect: use refetchQueries so the list is fresh on back-navigation
+onSettled: () => {
+  void queryClient.refetchQueries({ queryKey: programKeys.myPrograms() })
+}
+
+// Delete on current page: invalidate is enough
+onSettled: settle(queryClient, [programKeys.all])
 ```
 
 ## Concurrent Mutation Safety

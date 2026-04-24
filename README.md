@@ -1,10 +1,10 @@
 <p align="center">
-  <h1 align="center">⚡ DotClaude</h1>
+  <h1 align="center">DotClaude</h1>
   <p align="center">
-    <strong>Your entire Claude Code setup — skills, agents, commands, tooling — in one plugin.</strong>
+    <strong>Your entire Claude Code setup in one plugin.</strong>
   </p>
   <p align="center">
-    <code>17 skills</code> · <code>19 agents</code> · <code>6 commands</code> · <code>zero bloat</code>
+    <code>18 skills</code> &middot; <code>19 agents</code> &middot; <code>6 commands</code> &middot; <code>zero bloat</code>
   </p>
 </p>
 
@@ -28,34 +28,41 @@
 
 ---
 
-> **Note:** DotClaude is distributed through the [claude-toolkit](https://github.com/harryy2510/claude-toolkit) marketplace.
-
-```
-┌────────────────────────────────────────────────────────────────────────────┐
-│                                                                            │
-│   claude plugin marketplace add harryy2510/claude-toolkit                  │
-│   claude plugin install dotclaude@claude-toolkit                           │
-│   /dotclaude:setup                                                 │
-│                                                                            │
-│   That's it. Every project. Every agent. Same standards.                   │
-│                                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
+```bash
+claude plugin marketplace add harryy2510/claude-toolkit
+claude plugin install dotclaude@claude-toolkit
+/dotclaude:setup
 ```
 
 ---
 
-## 🧠 Skills
+## How It Works
 
-Loaded on-demand. Only the relevant skill enters context — the rest cost 0 tokens.
+Skills load on demand. Only the relevant skill enters context -- the rest cost 0 tokens. Agents are specialists that know when to defer. Commands run bash scripts that do the work without burning tokens.
 
-| | Skill | What it teaches |
+```
+You: "Build a form"
+
+  1. Loads forms-rhf-zod skill   ── react-hook-form + zod v4 patterns
+  2. Loads ui skill              ── Tailwind v4, shadcn, CVA variants
+  3. Generates correct code      ── follows conventions from CLAUDE.md
+  4. Pre-commit hook catches     ── ESLint + Prettier enforce the rest
+```
+
+---
+
+## Skills
+
+Loaded on-demand. Each skill is a reference guide with exact patterns, APIs, and conventions.
+
+| | Skill | What |
 |---|---|---|
-| 🏗️ | `scaffold` | Full project scaffolding — TanStack Start + Supabase + Cloudflare |
+| 🏗️ | `scaffold` | Full project scaffolding -- TanStack Start + Supabase + Cloudflare |
 | 🔧 | `project-setup` | ESLint, Prettier, Husky, dotenvx encrypted env, CI/CD |
-| ✅ | `conventions` | One-time ESLint + pre-commit setup — enforces style via tooling forever |
+| ✅ | `conventions` | One-time ESLint + pre-commit setup -- enforces style via tooling |
 | 🎨 | `ui` | Tailwind v4, shadcn/base-ui, CVA variants, dark mode, animations |
 | 🧩 | `shadcn` | Adding, searching, fixing, composing shadcn/ui components |
-| 📝 | `forms-rhf-zod` | react-hook-form + zod v4, create/edit modes, useWatch patterns |
+| 📝 | `forms-rhf-zod` | react-hook-form + zod v4, create/edit modes, useWatch |
 | 🔄 | `react-query-mutative` | QueryClient config, key factories, optimistic updates |
 | 📦 | `zustand-x-ui-state` | zustand-x v6 stores, boundary rules, theme system |
 | 🛣️ | `tanstack-start-cloudflare` | Routes, layouts, server functions, deploy config |
@@ -64,163 +71,75 @@ Loaded on-demand. Only the relevant skill enters context — the rest cost 0 tok
 | ⚡ | `vite` | Vite config, plugin API, SSR, Rolldown migration |
 | 🚀 | `react-best-practices` | 57 performance rules + composition patterns |
 | 🗄️ | `supabase-postgres-best-practices` | Indexing, query plans, RLS perf, connection pooling |
-| 🗺️ | `repo-map` | agent-analyzer symbol index — map a codebase without reading every file |
-| 🧹 | `deslop` | Detect AI-generated slop — debug stmts, placeholders, hardcoded secrets |
-| 🧪 | `testing` | Vitest + Testing Library + Playwright, file conventions, what to test |
+| 🗺️ | `repo-map` | agent-analyzer symbol index -- map a codebase without reading every file |
+| 🧹 | `deslop` | Detect AI slop -- debug stmts, placeholders, hardcoded secrets |
+| 🧪 | `testing` | Vitest + Testing Library + Playwright, file conventions |
+| 📄 | `readme` | Generate visually appealing READMEs with proper information flow |
 
 ---
 
-## 🤖 Agents
+## Agents
 
-**19 specialists. All under 80 lines. Pure signal, no fluff.**
+19 specialists. All under 80 lines. Pure signal.
 
-```
-╔══════════════════════════════════════════════════════════════════════╗
-║                                                                      ║
-║  💻 ENGINEERING          🧪 TESTING         📋 PRODUCT              ║
-║  ─────────────           ─────────          ──────────               ║
-║  Backend Architect       API Tester         Product Manager          ║
-║  Frontend Developer      Perf Benchmarker   UX Architect             ║
-║  Senior Developer        E2E Test Writer                             ║
-║  Database Optimizer      E2E Test Runner    🎛️ ORCHESTRATION         ║
-║  DevOps Automator                           ────────────────         ║
-║  Security Engineer                          Agents                   ║
-║  Rapid Prototyper                           Orchestrator             ║
-║  Software Architect                         (8-phase workflow)       ║
-║  Code Reviewer                                                       ║
-║  Git Workflow Master                                                 ║
-║  Technical Writer                                                    ║
-║  MCP Builder                                                         ║
-║                                                                      ║
-╚══════════════════════════════════════════════════════════════════════╝
-```
-
----
-
-## ⚡ Commands
-
-Type these directly in Claude Code:
-
-| Command | What happens |
+| Category | Agents |
 |---|---|
-| `/repo-map` | 🗺️ Runs agent-analyzer → builds symbol index → saves to `.claude/repo-map.json` |
-| `/deslop` | 🧹 Scans codebase for slop → reports findings → offers to fix |
-| `/skill-lint` | ✅ Validates skills + agents → checks frontmatter, size, refs, triggers |
-| `/dotclaude:setup` | 🔧 One-time: copies conventions to `~/.claude/CLAUDE.md` + installs agent-analyzer |
-| `/dotclaude:update` | 🔄 Updates plugin + refreshes CLAUDE.md conventions |
-| `/dotclaude:uninstall` | 🗑️ Removes DotClaude conventions from CLAUDE.md |
+| **Engineering** | Backend Architect, Frontend Developer, Senior Developer, Database Optimizer, DevOps Automator, Security Engineer, Rapid Prototyper, Software Architect, Code Reviewer, Git Workflow Master, Technical Writer, MCP Builder |
+| **Testing** | API Tester, Performance Benchmarker, E2E Test Writer, E2E Test Runner |
+| **Product** | Product Manager, UX Architect |
+| **Orchestration** | Agents Orchestrator (8-phase workflow with approval gate) |
+
+### Orchestrator flow
 
 ```
-  /deslop src/              ← you type this
-       │
-       ▼
-  commands/deslop.md        ← agent reads the playbook
-       │
-       ▼
-  scripts/deslop.sh         ← bash does the work (0 tokens)
-       │
-       ▼
-  Report + fix offers       ← agent interprets, you decide
+Discovery  →  Explore  →  Plan  →  ⛔ APPROVE  →  Implement  →  Review  →  Validate  →  Ship
 ```
 
 ---
 
-## 🛡️ Three-Layer Convention Defense
+## Commands
 
-Run the `conventions` skill once per project. Done forever.
-
-```
-  ┌─────────────────────────────────────────────┐
-  │  Layer 1: CLAUDE.md                         │
-  │  AI reads the rules → generates correct     │
-  │  code on first try                          │
-  ├─────────────────────────────────────────────┤
-  │  Layer 2: ESLint + Prettier                 │
-  │  Catches mistakes at save/lint time         │
-  │  Full IDE integration                       │
-  ├─────────────────────────────────────────────┤
-  │  Layer 3: Pre-commit hooks                  │
-  │  Hard gate — wrong code NEVER gets          │
-  │  committed                                  │
-  └─────────────────────────────────────────────┘
-```
-
----
-
-## 🎯 Agent Orchestration
-
-The `agents-orchestrator` enforces an 8-phase workflow:
+| Command | What |
+|---|---|
+| `/repo-map` | Runs agent-analyzer, builds symbol index |
+| `/deslop` | Scans codebase for AI slop, reports + offers fixes |
+| `/skill-lint` | Validates skills + agents (frontmatter, size, refs) |
+| `/dotclaude:setup` | One-time: copies conventions to `~/.claude/CLAUDE.md` |
+| `/dotclaude:update` | Updates plugin + refreshes conventions |
+| `/dotclaude:uninstall` | Removes conventions from CLAUDE.md |
 
 ```
-  ┌──────────────┐
-  │ 1. Discovery │ ──→  Read spec/issue, understand scope
-  ├──────────────┤
-  │ 2. Explore   │ ──→  Read code, check existing patterns
-  ├──────────────┤
-  │ 3. Plan      │ ──→  Propose approach, identify changes
-  ├──────────────┤
-  │ 4. APPROVE   │ ──→  ⛔ HARD GATE — user must approve
-  ├──────────────┤
-  │ 5. Implement │ ──→  Spawn specialist agents, write code
-  ├──────────────┤
-  │ 6. Review    │ ──→  Code reviewer agent, fix findings
-  ├──────────────┤
-  │ 7. Validate  │ ──→  Run check command (deterministic)
-  ├──────────────┤
-  │ 8. Ship      │ ──→  Commit/PR — only if you say so
-  └──────────────┘
+/deslop src/
+
+  commands/deslop.md     ← agent reads the playbook
+  scripts/deslop.sh      ← bash does the work (0 tokens)
+  Report + fix offers    ← agent interprets, you decide
 ```
 
 ---
 
-## 📁 Project Structure
+## Three-Layer Convention Defense
+
+Run `conventions` skill once per project. Done forever.
 
 ```
-dotclaude/
-├── CLAUDE.md                ← Conventions (copied to ~/.claude/CLAUDE.md by /dotclaude:setup)
-├── agents/                  ← 19 specialist agents
-│   ├── agents-orchestrator.md
-│   ├── engineering-*.md
-│   ├── testing-*.md
-│   ├── product-manager.md
-│   └── design-ux-architect.md
-├── skills/                  ← 16 on-demand skills
-│   ├── conventions/
-│   ├── scaffold/
-│   ├── ui/
-│   ├── ...
-│   └── deslop/
-│       ├── SKILL.md
-│       └── references/
-├── commands/                ← Slash commands
-│   ├── repo-map.md
-│   ├── deslop.md
-│   ├── skill-lint.md
-│   ├── dotclaude-setup.md
-│   ├── dotclaude-update.md
-│   └── dotclaude-uninstall.md
-└── scripts/                 ← Pure bash tooling (0 tokens)
-    ├── deslop.sh
-    ├── install-repo-map.sh
-    └── skill-lint.sh
+Layer 1: CLAUDE.md          AI reads rules → generates correct code
+Layer 2: ESLint + Prettier  Catches mistakes at save/lint time
+Layer 3: Pre-commit hooks   Hard gate -- wrong code never gets committed
 ```
 
 ---
 
-## 🔧 Install / Update / Uninstall
-
-Uses Claude Code's native plugin system. No custom scripts needed.
-
-### Install
+## Install
 
 ```bash
-# 1. Add the marketplace
+# Add marketplace (one time)
 claude plugin marketplace add harryy2510/claude-toolkit
 
-# 2. Install the plugin
+# Install
 claude plugin install dotclaude@claude-toolkit
 
-# 3. Run setup in Claude Code
+# Setup (in Claude Code)
 /dotclaude:setup
 ```
 
@@ -231,85 +150,36 @@ claude plugin marketplace update claude-toolkit
 claude plugin update dotclaude@claude-toolkit
 ```
 
-The marketplace update fetches the latest claude-toolkit index. The plugin update pulls the new version. Both steps needed.
-
-Or from Claude Code: `/dotclaude:update`
+Or in Claude Code: `/dotclaude:update`
 
 ### Uninstall
 
-Run `/dotclaude:uninstall` first (removes conventions from CLAUDE.md), then:
+Run `/dotclaude:uninstall` first, then:
 
 ```bash
 claude plugin uninstall dotclaude@claude-toolkit
 ```
 
-### What happens where
-
-```
-  marketplace add           →  Registers harryy2510/claude-toolkit as a plugin source
-  plugin install              →  Installs dotclaude from the marketplace
-                                 Skills, agents, commands available immediately
-
-  /dotclaude:setup →  Conventions copied to ~/.claude/CLAUDE.md
-                                 agent-analyzer binary installed
-
-  plugin update              →  Plugin cache refreshed from git
-  /dotclaude:update → Same + refreshes CLAUDE.md conventions
-
-  /dotclaude:uninstall → Removes conventions from ~/.claude/CLAUDE.md
-  plugin uninstall              →  Removes plugin from cache
-```
-
 ---
 
-## ✅ Validate
+## Adding skills
 
-```
-/skill-lint              Lint everything
-/skill-lint skills       Lint skills only
-/skill-lint agents       Lint agents only
-/deslop .                Deslop the plugin itself
-```
+1. Create `skills/<name>/SKILL.md` with frontmatter (`name`, `description`)
+2. Heavy reference content goes in `skills/<name>/references/`
+3. Run `/skill-lint skills`
 
----
+## Adding agents
 
-## 👥 For the Team
-
-### Adding a skill
-
-1. Create `skills/<name>/SKILL.md`:
-   ```yaml
-   ---
-   name: my-skill
-   description: "Use when [trigger condition]."
-   ---
-   ```
-2. Heavy content → `skills/<name>/references/`
-3. Add to skill table in `CLAUDE.md`
-4. Run `/skill-lint skills`
-
-### Adding an agent
-
-1. Create `agents/<name>.md`:
-   ```yaml
-   ---
-   name: My Agent
-   description: Use when [trigger]. Does [what].
-   color: blue
-   ---
-   ```
-2. Under 80 lines. Role, rules, patterns. No fluff.
+1. Create `agents/<name>.md` with frontmatter (`name`, `description`, `color`)
+2. Under 80 lines. Role, rules, patterns.
 3. Run `/skill-lint agents`
 
-### Contributing rules
-
-The plugin follows its own conventions:
-
-```
-  ✅  Single quotes, no semicolons, trailing commas
-  ✅  type not interface, inline type imports
-  ✅  Named imports from react (never React.xxx)
-  ✅  bunx not npx, bun not npm
-```
-
 ---
+
+## Author
+
+**Hariom Sharma** -- [github.com/harryy2510](https://github.com/harryy2510)
+
+## License
+
+MIT

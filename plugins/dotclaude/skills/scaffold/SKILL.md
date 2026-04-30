@@ -8,7 +8,7 @@ user_invocable: true
 
 ## Fullstack Stack (TanStack Start + Supabase + Cloudflare)
 
-TanStack Start + Router, React 19, React Query, react-hook-form + zod v4, zustand-x, Supabase (auth + DB + RLS), Tailwind CSS v4, shadcn/ui + base-ui, Cloudflare Workers, ESLint, Prettier, Husky
+TanStack Start + Router, React 19, React Query, react-hook-form + zod v4, zustand-x, Supabase (auth + DB + RLS), Tailwind CSS v4, shadcn/ui + base-ui, Cloudflare Workers, Bun, TypeScript, oxlint, oxfmt, Agent Toolkit hooks
 
 ### Before You Start
 
@@ -72,7 +72,7 @@ scripts/
 
 **Dependencies**: @base-ui-components/react, @supabase/supabase-js, @supabase/ssr, @cloudflare/vite-plugin, @tanstack/react-start, @tanstack/react-router, @tanstack/react-query, @tanstack/react-router-ssr-query, react-hook-form, @hookform/resolvers, zod, zod-empty, zustand, zustand-x, mutative, es-toolkit, usehooks-ts, motion, dayjs, sonner, class-variance-authority, clsx, tailwind-merge, lucide-react, react, react-dom
 
-**Dev**: typescript, vite, @vitejs/plugin-react, babel-plugin-react-compiler, @tailwindcss/vite, @tailwindcss/typography, @tanstack/devtools-vite, eslint, @eslint/js, typescript-eslint, eslint-plugin-perfectionist, prettier, husky, lint-staged, wrangler, vitest, @testing-library/react, @testing-library/dom, jsdom
+**Dev**: typescript, vite, @vitejs/plugin-react, babel-plugin-react-compiler, @tailwindcss/vite, @tailwindcss/typography, @tanstack/devtools-vite, oxlint, oxfmt, wrangler, vitest, @testing-library/react, @testing-library/dom, jsdom
 
 ### Key Conventions
 

@@ -334,14 +334,10 @@ export default {
 
 A Promise that is not `await`ed, `return`ed, or passed to `ctx.waitUntil()` is a floating promise. Causes: dropped results, swallowed errors, unfinished work. The runtime may terminate the isolate before it completes.
 
-**Check**: every `fetch()`, `env.*.put()`, `env.*.send()`, and any other async call is handled. Enable `no-floating-promises` lint rule.
+**Check**: every `fetch()`, `env.*.put()`, `env.*.send()`, and any other async call is handled. Enable type-aware floating promise checks.
 
 ```bash
-# ESLint
-npx eslint --rule '{"@typescript-eslint/no-floating-promises": "error"}' src/
-
-# oxlint
-npx oxlint --deny typescript/no-floating-promises src/
+oxlint --type-aware --type-check --deny typescript/no-floating-promises src/
 ```
 
 ```ts

@@ -5,3 +5,22 @@
 .remember
 .idea
 .vscode.claude/worktrees/
+
+docs/superpowers/
+
+# agents.dev local and generated files
+/.agents/local.json
+/.agents/generated/
+/.agents/intel/
+/CLAUDE.md
+/.codex/
+/.claude/
+/.gemini/
+/.cursor/
+/.antigravity/
+/.windsurf/
+/.opencode/
+/.junie/
+/opencode.json
+/.vscode/mcp.json
+/.vscode/settings.json

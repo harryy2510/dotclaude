@@ -158,7 +158,7 @@ Use `remote: true` on bindings that require it during local dev (AI, Vectorize, 
 4. **Check config** — compatibility_date, nodejs_compat, observability, secrets
 5. **Check patterns** — streaming, floating promises, global state
 6. **Check security** — crypto usage, secret handling, timing-safe comparisons
-7. **Validate** — `bunx tsc --noEmit`, lint for `no-floating-promises`
+7. **Validate** — `oxlint --type-aware --type-check`, including floating promise checks
 
 ## Related Skills
 

@@ -1,10 +1,10 @@
 <p align="center">
   <h1 align="center">⚡ DotClaude</h1>
   <p align="center">
-    <strong>Your entire Claude Code setup — skills, agents, commands, tooling — in one plugin.</strong>
+    <strong>Your agent setup: skills, agents, commands, tooling, and shared rules in one plugin.</strong>
   </p>
   <p align="center">
-    <code>17 skills</code> · <code>19 agents</code> · <code>6 commands</code> · <code>zero bloat</code>
+    <code>20 skills</code> · <code>19 agents</code> · <code>6 commands</code> · <code>zero bloat</code>
   </p>
 </p>
 
@@ -20,21 +20,21 @@
   <a href="https://react-hook-form.com"><img src="https://img.shields.io/badge/React_Hook_Form-EC5990?style=flat-square&logo=reacthookform&logoColor=white" alt="React Hook Form"></a>
   <a href="https://zod.dev"><img src="https://img.shields.io/badge/Zod_v4-3E67B1?style=flat-square&logo=zod&logoColor=white" alt="Zod v4"></a>
   <a href="https://bun.sh"><img src="https://img.shields.io/badge/Bun-000000?style=flat-square&logo=bun&logoColor=white" alt="Bun"></a>
-  <a href="https://eslint.org"><img src="https://img.shields.io/badge/ESLint-4B32C3?style=flat-square&logo=eslint&logoColor=white" alt="ESLint"></a>
-  <a href="https://prettier.io"><img src="https://img.shields.io/badge/Prettier-F7B93E?style=flat-square&logo=prettier&logoColor=black" alt="Prettier"></a>
+  <a href="https://oxc.rs"><img src="https://img.shields.io/badge/Oxlint-111827?style=flat-square" alt="Oxlint"></a>
+  <a href="https://oxc.rs"><img src="https://img.shields.io/badge/Oxfmt-111827?style=flat-square" alt="Oxfmt"></a>
   <a href="https://vite.dev"><img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite"></a>
   <a href="https://playwright.dev"><img src="https://img.shields.io/badge/Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white" alt="Playwright"></a>
 </p>
 
 ---
 
-> **Note:** DotClaude is distributed through the [claude-toolkit](https://github.com/harryy2510/claude-toolkit) marketplace.
+> **Note:** DotClaude is distributed through the [agent-toolkit](https://github.com/harryy2510/agent-toolkit) marketplace.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────┐
 │                                                                            │
-│   claude plugin marketplace add harryy2510/claude-toolkit                  │
-│   claude plugin install dotclaude@claude-toolkit                           │
+│   claude plugin marketplace add harryy2510/agent-toolkit                  │
+│   claude plugin install dotclaude@agent-toolkit                           │
 │   /dotclaude:setup                                                 │
 │                                                                            │
 │   That's it. Every project. Every agent. Same standards.                   │
@@ -51,8 +51,11 @@ Loaded on-demand. Only the relevant skill enters context — the rest cost 0 tok
 | | Skill | What it teaches |
 |---|---|---|
 | 🏗️ | `scaffold` | Full project scaffolding — TanStack Start + Supabase + Cloudflare |
-| 🔧 | `project-setup` | ESLint, Prettier, Husky, dotenvx encrypted env, CI/CD |
-| ✅ | `conventions` | One-time ESLint + pre-commit setup — enforces style via tooling forever |
+| 🔧 | `toolchain` | Bun, TypeScript, oxlint, oxfmt, hooks, Conventional Commits |
+| 🧭 | `repo-intelligence` | Unified CodeSight, repo-map, deslop context and checks |
+| 🤖 | `agent-routing` | Role activation, skill routing, native subagent fallback |
+| 🔧 | `project-setup` | DX tooling, dotenvx encrypted env, CI/CD |
+| ✅ | `conventions` | One-time convention setup — enforces style via tooling forever |
 | 🎨 | `ui` | Tailwind v4, shadcn/base-ui, CVA variants, dark mode, animations |
 | 🧩 | `shadcn` | Adding, searching, fixing, composing shadcn/ui components |
 | 📝 | `forms-rhf-zod` | react-hook-form + zod v4, create/edit modes, useWatch patterns |
@@ -64,8 +67,8 @@ Loaded on-demand. Only the relevant skill enters context — the rest cost 0 tok
 | ⚡ | `vite` | Vite config, plugin API, SSR, Rolldown migration |
 | 🚀 | `react-best-practices` | 57 performance rules + composition patterns |
 | 🗄️ | `supabase-postgres-best-practices` | Indexing, query plans, RLS perf, connection pooling |
-| 🗺️ | `repo-map` | agent-analyzer symbol index — map a codebase without reading every file |
-| 🧹 | `deslop` | Detect AI-generated slop — debug stmts, placeholders, hardcoded secrets |
+| 🗺️ | `repo-map` | Legacy fallback symbol index when toolkit repo intelligence is insufficient |
+| 🧹 | `deslop` | Legacy fallback slop scanner when toolkit checks are unavailable |
 | 🧪 | `testing` | Vitest + Testing Library + Playwright, file conventions, what to test |
 
 ---
@@ -103,46 +106,52 @@ Type these directly in Claude Code:
 
 | Command | What happens |
 |---|---|
-| `/repo-map` | 🗺️ Runs agent-analyzer → builds symbol index → saves to `.claude/repo-map.json` |
-| `/deslop` | 🧹 Scans codebase for slop → reports findings → offers to fix |
+| `/repo-map` | 🗺️ Legacy fallback: runs agent-analyzer → builds symbol index |
+| `/deslop` | 🧹 Legacy fallback: scans codebase for slop |
 | `/skill-lint` | ✅ Validates skills + agents → checks frontmatter, size, refs, triggers |
-| `/dotclaude:setup` | 🔧 One-time: copies conventions to `~/.claude/CLAUDE.md` + installs agent-analyzer |
-| `/dotclaude:update` | 🔄 Updates plugin + refreshes CLAUDE.md conventions |
-| `/dotclaude:uninstall` | 🗑️ Removes DotClaude conventions from CLAUDE.md |
+| `/dotclaude:setup` | 🔧 One-time: installs managed global rules for Claude and Codex |
+| `/dotclaude:update` | 🔄 Updates plugin + refreshes Claude and Codex conventions |
+| `/dotclaude:uninstall` | 🗑️ Removes DotClaude conventions from Claude and Codex global instruction files |
 
 ```
-  /deslop src/              ← you type this
+  bunx @harryy/agent-toolkit repo intel   ← builds local repo context
        │
        ▼
-  commands/deslop.md        ← agent reads the playbook
+  .agents/intel/summary.md                ← agents read this first
        │
        ▼
-  scripts/deslop.sh         ← bash does the work (0 tokens)
+  bunx @harryy/agent-toolkit repo check   ← rules, tooling, slop checks
        │
        ▼
-  Report + fix offers       ← agent interprets, you decide
+  Report + fix offers                     ← agent interprets, you decide
 ```
 
 ---
 
 ## 🛡️ Three-Layer Convention Defense
 
-Run the `conventions` skill once per project. Done forever.
+Run Agent Toolkit once per project. Done forever.
 
 ```
   ┌─────────────────────────────────────────────┐
-  │  Layer 1: CLAUDE.md                         │
+  │  Layer 1: CLAUDE.md / AGENTS.md             │
   │  AI reads the rules → generates correct     │
   │  code on first try                          │
   ├─────────────────────────────────────────────┤
-  │  Layer 2: ESLint + Prettier                 │
-  │  Catches mistakes at save/lint time         │
-  │  Full IDE integration                       │
+  │  Layer 2: oxlint + oxfmt                    │
+  │  Fast lint, type-check, and formatting      │
+  │  Type-aware checks without tsc              │
   ├─────────────────────────────────────────────┤
   │  Layer 3: Pre-commit hooks                  │
   │  Hard gate — wrong code NEVER gets          │
   │  committed                                  │
   └─────────────────────────────────────────────┘
+```
+
+```bash
+bunx @harryy/agent-toolkit repo bootstrap
+bunx @harryy/agent-toolkit repo intel
+bunx @harryy/agent-toolkit repo check
 ```
 
 ---
@@ -177,14 +186,21 @@ The `agents-orchestrator` enforces an 8-phase workflow:
 
 ```
 dotclaude/
-├── CLAUDE.md                ← Conventions (copied to ~/.claude/CLAUDE.md by /dotclaude:setup)
+├── CLAUDE.md                ← Claude-specific plugin compatibility rules
+├── AGENTS.md                ← Shared agent conventions for global symlinks
+├── .claude-plugin/          ← Claude Code plugin manifest
+├── .codex-plugin/           ← Codex plugin manifest
+├── gemini-extension/        ← Gemini CLI extension wrapper
+│   ├── gemini-extension.json
+│   ├── AGENTS.md            ← symlink to ../AGENTS.md
+│   └── skills               ← symlink to ../skills
 ├── agents/                  ← 19 specialist agents
 │   ├── agents-orchestrator.md
 │   ├── engineering-*.md
 │   ├── testing-*.md
 │   ├── product-manager.md
 │   └── design-ux-architect.md
-├── skills/                  ← 16 on-demand skills
+├── skills/                  ← 20 on-demand skills
 │   ├── conventions/
 │   ├── scaffold/
 │   ├── ui/
@@ -209,54 +225,77 @@ dotclaude/
 
 ## 🔧 Install / Update / Uninstall
 
-Uses Claude Code's native plugin system. No custom scripts needed.
+Claude Code uses its native plugin system. Codex and other agents can consume the shared instructions through `AGENTS.md`, `.agents/agents.json`, and the Codex plugin manifest.
 
 ### Install
 
+Claude Code:
+
 ```bash
 # 1. Add the marketplace
-claude plugin marketplace add harryy2510/claude-toolkit
+claude plugin marketplace add harryy2510/agent-toolkit
 
 # 2. Install the plugin
-claude plugin install dotclaude@claude-toolkit
+claude plugin install dotclaude@agent-toolkit
 
 # 3. Run setup in Claude Code
 /dotclaude:setup
 ```
 
+Gemini CLI:
+
+```bash
+gemini extensions link plugins/dotclaude/gemini-extension
+```
+
+Codex:
+
+```bash
+bunx @harryy/agent-toolkit setup --yes
+bunx @harryy/agent-toolkit repo migrate
+```
+
+Codex consumes `AGENTS.md` directly and can read the local plugin metadata at `plugins/dotclaude/.codex-plugin/plugin.json`.
+
+For repo-local agent sync:
+
+```bash
+agents sync --path .
+agents watch --path .
+```
+
 ### Update
 
 ```bash
-claude plugin marketplace update claude-toolkit
-claude plugin update dotclaude@claude-toolkit
+claude plugin marketplace update agent-toolkit
+claude plugin update dotclaude@agent-toolkit
 ```
 
-The marketplace update fetches the latest claude-toolkit index. The plugin update pulls the new version. Both steps needed.
+The marketplace update fetches the latest agent-toolkit index. The plugin update pulls the new version. Both steps needed.
 
 Or from Claude Code: `/dotclaude:update`
 
 ### Uninstall
 
-Run `/dotclaude:uninstall` first (removes conventions from CLAUDE.md), then:
+Run `/dotclaude:uninstall` first (removes managed conventions from Claude and Codex global instruction files), then:
 
 ```bash
-claude plugin uninstall dotclaude@claude-toolkit
+claude plugin uninstall dotclaude@agent-toolkit
 ```
 
 ### What happens where
 
 ```
-  marketplace add           →  Registers harryy2510/claude-toolkit as a plugin source
+  marketplace add           →  Registers harryy2510/agent-toolkit as a plugin source
   plugin install              →  Installs dotclaude from the marketplace
                                  Skills, agents, commands available immediately
 
-  /dotclaude:setup →  Conventions copied to ~/.claude/CLAUDE.md
-                                 agent-analyzer binary installed
+  /dotclaude:setup →  Managed rules inserted into ~/.claude/CLAUDE.md and ~/.codex/AGENTS.md
 
   plugin update              →  Plugin cache refreshed from git
-  /dotclaude:update → Same + refreshes CLAUDE.md conventions
+  /dotclaude:update → Same + refreshes global conventions
 
-  /dotclaude:uninstall → Removes conventions from ~/.claude/CLAUDE.md
+  /dotclaude:uninstall → Removes managed conventions from global instruction files
   plugin uninstall              →  Removes plugin from cache
 ```
 
@@ -268,7 +307,7 @@ claude plugin uninstall dotclaude@claude-toolkit
 /skill-lint              Lint everything
 /skill-lint skills       Lint skills only
 /skill-lint agents       Lint agents only
-/deslop .                Deslop the plugin itself
+bunx @harryy/agent-toolkit repo check
 ```
 
 ---
@@ -285,7 +324,7 @@ claude plugin uninstall dotclaude@claude-toolkit
    ---
    ```
 2. Heavy content → `skills/<name>/references/`
-3. Add to skill table in `CLAUDE.md`
+3. Add to skill table in `AGENTS.md` and compatibility docs when needed
 4. Run `/skill-lint skills`
 
 ### Adding an agent

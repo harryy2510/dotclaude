@@ -1,5 +1,5 @@
 ---
-description: One-time setup after installing DotClaude. Copies conventions to ~/.claude/CLAUDE.md and installs agent-analyzer.
+description: One-time setup after installing DotClaude. Copies conventions to ~/.claude/CLAUDE.md and ~/.codex/AGENTS.md, then installs agent-analyzer.
 ---
 
 Run the setup script:

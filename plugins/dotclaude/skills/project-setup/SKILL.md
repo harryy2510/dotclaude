@@ -11,76 +11,76 @@ Covers three domains: DX tooling (lint/format/hooks), encrypted environment mana
 
 ## 1. DX Tooling
 
-### ESLint + Prettier
+Read the `toolchain` skill first. It owns the current defaults.
 
-Lint with ESLint v9 (flat config), format with Prettier.
+### Bun + TypeScript
+
+- Use Bun for package management and TypeScript execution.
+- Use TypeScript for new JavaScript-platform source code.
+- Do not create `.js` or `.jsx` source files for new code.
+- Do not add npm, yarn, pnpm, or npx workflows unless the repo is explicitly legacy and the user approves.
+
+### Oxlint + Oxfmt
+
+Use Oxlint for linting and type checking. Use Oxfmt for formatting.
 
 ```bash
-bun add -d eslint @eslint/js typescript-eslint eslint-plugin-perfectionist prettier
+bun add -d oxlint oxlint-tsgolint oxfmt @types/bun
 ```
 
-**eslint.config.ts** (flat config):
+`oxlint.config.ts`:
 
 ```ts
-import js from '@eslint/js'
-import perfectionist from 'eslint-plugin-perfectionist'
-import tseslint from 'typescript-eslint'
+import { defineConfig } from 'oxlint'
 
-export default tseslint.config(
-	js.configs.recommended,
-	tseslint.configs.strict,
-	perfectionist.configs['recommended-natural'],
-	{
-		rules: {
-			'@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],
-			'@typescript-eslint/no-empty-object-type': 'error',
-			eqeqeq: 'error',
-		},
+export default defineConfig({
+	options: {
+		typeAware: true,
+		typeCheck: true,
 	},
-)
+})
 ```
 
-**prettier.config.mjs**:
+### tsconfig.json
 
-```js
-export default {
-	useTabs: true,
-	tabWidth: 2,
-	singleQuote: true,
-	semi: false,
-	trailingComma: 'all',
-}
-```
+Use Bun-compatible TypeScript settings. Do not run `tsc` as the check command.
 
-### Husky + lint-staged
-
-```bash
-bun add -d husky lint-staged && bunx husky init
-```
-
-`.husky/pre-commit`: `bunx lint-staged`
-
-```json
-{
-  "lint-staged": {
-    "*.{ts,tsx}": ["eslint --fix", "prettier --write"],
-    "*.{json,css,md,jsonc,toml}": ["prettier --write"]
-  }
-}
-```
-
-### tsconfig.json (strict)
-
-Required: `strict`, `noUnusedLocals`, `noUnusedParameters`, `noFallthroughCasesInSwitch`, `noUncheckedSideEffectImports`, `verbatimModuleSyntax` -- all `true`.
+Required: `strict`, `noFallthroughCasesInSwitch`, `noUncheckedIndexedAccess`, `verbatimModuleSyntax`, `allowImportingTsExtensions`, `noEmit`.
 
 ### Scripts
 
 ```json
 {
-  "check": "tsc --noEmit && eslint . && prettier --check .",
-  "fix": "eslint --fix . && prettier --write ."
+	"scripts": {
+		"test": "bun test",
+		"check": "bun test && oxlint --type-aware --type-check .",
+		"format": "oxfmt -w ."
+	}
 }
 ```
+
+For Rust plus Bun repos:
+
+```json
+{
+	"scripts": {
+		"test": "bun test",
+		"test:rust": "cargo test",
+		"check": "bun test && cargo test && oxlint --type-aware --type-check .",
+		"format": "oxfmt -w ."
+	}
+}
+```
+
+### Git Hooks
+
+Use repo-local hooks installed by Agent Toolkit:
+
+```bash
+bunx @harryy/agent-toolkit repo bootstrap
+```
+
+Hooks should call `bunx @harryy/agent-toolkit repo check` and enforce Conventional Commit messages.
 
 ### generate-vite-env.ts
 
@@ -107,7 +107,7 @@ dist/
 1. `bun add @dotenvx/dotenvx`
 2. Encrypt: `dotenvx encrypt -f .env.development --stdout > .env.development.encrypted` (same for production)
 3. Add `postinstall`, `env:encrypt`, `env:local`, `sync-env` scripts to `package.json`
-4. Add pre-commit hook to auto-encrypt before lint-staged
+4. Add an Agent Toolkit pre-commit hook step to auto-encrypt env files
 5. Create `scripts/generate-env-local.ts` for local Supabase overrides
 6. Create `scripts/sync-env.ts` to push secrets to Cloudflare + Supabase
 

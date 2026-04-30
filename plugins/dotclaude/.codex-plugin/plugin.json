@@ -1,0 +1,41 @@
+{
+  "name": "dotclaude",
+  "version": "1.6.0",
+  "description": "Agent conventions, skills, and tooling for full-stack TypeScript projects.",
+  "author": {
+    "name": "Hariom Sharma",
+    "email": "harryy2510@gmail.com",
+    "url": "https://github.com/harryy2510"
+  },
+  "homepage": "https://github.com/harryy2510/dotclaude",
+  "repository": "https://github.com/harryy2510/dotclaude",
+  "license": "MIT",
+  "keywords": [
+    "agents",
+    "codex",
+    "claude",
+    "skills",
+    "typescript",
+    "react"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "DotClaude",
+    "shortDescription": "Agent conventions, skills, and tooling for TypeScript projects.",
+    "longDescription": "DotClaude provides focused skills and shared rules for full-stack TypeScript, React, Supabase, Cloudflare, UI, testing, and quality workflows.",
+    "developerName": "Hariom Sharma",
+    "category": "Development",
+    "capabilities": [
+      "Skills",
+      "Review",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/harryy2510/dotclaude",
+    "defaultPrompt": [
+      "Review this repo against DotClaude conventions.",
+      "Set up project conventions for this TypeScript app.",
+      "Find AI slop and risky code in this change."
+    ],
+    "brandColor": "#7C3AED"
+  }
+}

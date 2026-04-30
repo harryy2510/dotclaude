@@ -1,17 +1,18 @@
-<!-- DOTCLAUDE:START -->
-# Global Claude Guidelines
+<!-- DOTCLAUDE-AGENTS:START -->
+# Global Agent Guidelines
 
-These rules apply to Claude Code sessions unless a more specific repository instruction overrides them.
+These rules apply to every agent session and every project unless a more specific repository instruction overrides them.
 
 ## Scope And Precedence
 
 - Read repository instructions first: `AGENTS.md`, `CLAUDE.md`, `README.md`, and equivalent local guidance.
 - If multiple instruction files exist, follow the most specific one first, then broader guidance.
 - Local project rules override these global defaults.
+- Tool-specific global files should point to this shared policy where possible.
 
 ## Mandatory Startup
 
-- Before substantial work, activate the relevant role profile from `agents/` when available. If a native subagent is not needed, use the role profile as the current-agent operating mode.
+- Before substantial work, activate the relevant role profile from `agents/` when available. If native subagents are unavailable, use the role profile as the current-agent operating mode.
 - Before writing code, read every relevant skill. Do not rely on memory for skill contents.
 - Always read `toolchain` for setup, scripts, linting, formatting, type checking, or new package work.
 - Always read `repo-intelligence` before broad codebase exploration, refactors, reviews, or completion checks.
@@ -83,4 +84,4 @@ These rules apply to Claude Code sessions unless a more specific repository inst
 - Run `bunx @harryy/agent-toolkit repo check` in agentized repos once the toolkit is available.
 - Run `agents sync --check` when `AGENTS.md` or `.agents/` changed.
 - If checks are not run, state why.
-<!-- DOTCLAUDE:END -->
+<!-- DOTCLAUDE-AGENTS:END -->

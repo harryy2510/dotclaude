@@ -35,7 +35,7 @@ Creates `.env.keys` with private decryption keys. **Never commit `.env.keys`.**
   "env:local": "bun scripts/generate-env-local.ts",
   "dev:server": "bunx supabase start && bun env:local",
   "sync-env": "bun scripts/sync-env.ts",
-  "types:cf": "wrangler types --env-file .env.development && prettier --write worker-configuration.d.ts"
+  "types:cf": "wrangler types --env-file .env.development && oxfmt -w worker-configuration.d.ts"
 }
 ```
 
@@ -45,9 +45,9 @@ Key details:
 - **env:encrypt uses `&&`** -- should fail loudly if encryption fails
 - **types:cf uses `--env-file`** -- reads vars from env file, not wrangler.jsonc
 
-## Pre-commit Hook (Husky)
+## Pre-commit Hook
 
-Add to `.husky/pre-commit` BEFORE lint-staged:
+Add this env encryption step to the repo-local Agent Toolkit pre-commit flow when the project uses encrypted env files:
 
 ```bash
 if [ -f .env.development ] && [ -f .env.production ]; then

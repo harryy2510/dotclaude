@@ -1,0 +1,20 @@
+{
+  "name": "dotclaude",
+  "interface": {
+    "displayName": "DotClaude"
+  },
+  "plugins": [
+    {
+      "name": "dotclaude",
+      "source": {
+        "source": "local",
+        "path": "./plugins/dotclaude"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Development"
+    }
+  ]
+}

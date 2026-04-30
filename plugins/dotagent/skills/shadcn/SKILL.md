@@ -7,7 +7,7 @@ allowed-tools: Bash(bunx shadcn@latest *)
 
 # shadcn/ui
 
-Components are added as source code via the CLI. Use Bun: `bunx shadcn@latest`. Do not use `npx`, `pnpm dlx`, or `yarn dlx` in DotClaude projects.
+Components are added as source code via the CLI. Use Bun: `bunx shadcn@latest`. Do not use `npx`, `pnpm dlx`, or `yarn dlx` in DotAgent projects.
 
 ## Current Project Context
 

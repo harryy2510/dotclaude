@@ -1,14 +1,14 @@
 {
-  "name": "dotclaude",
+  "name": "dotagent",
   "interface": {
-    "displayName": "DotClaude"
+    "displayName": "DotAgent"
   },
   "plugins": [
     {
-      "name": "dotclaude",
+      "name": "dotagent",
       "source": {
         "source": "local",
-        "path": "./plugins/dotclaude"
+        "path": "./plugins/dotagent"
       },
       "policy": {
         "installation": "AVAILABLE",

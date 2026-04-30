@@ -12,18 +12,18 @@ run_local_checks() {
 
 	if [ "$#" -gt 0 ] && [ "$1" = "--staged" ]; then
 		git diff --cached --check
-		bash plugins/dotclaude/scripts/deslop.sh --staged
+		bash plugins/dotagent/scripts/deslop.sh --staged
 	else
 		git diff --check
-		bash plugins/dotclaude/scripts/deslop.sh .
+		bash plugins/dotagent/scripts/deslop.sh .
 	fi
 
-	bash -n plugins/dotclaude/scripts/skill-lint.sh plugins/dotclaude/scripts/deslop.sh plugins/dotclaude/scripts/setup.sh plugins/dotclaude/scripts/teardown.sh
-	bash plugins/dotclaude/scripts/skill-lint.sh plugins/dotclaude/skills
-	bash plugins/dotclaude/scripts/skill-lint.sh plugins/dotclaude/agents
+	bash -n plugins/dotagent/scripts/skill-lint.sh plugins/dotagent/scripts/deslop.sh plugins/dotagent/scripts/setup.sh plugins/dotagent/scripts/teardown.sh
+	bash plugins/dotagent/scripts/skill-lint.sh plugins/dotagent/skills
+	bash plugins/dotagent/scripts/skill-lint.sh plugins/dotagent/agents
 
 	if command -v bun >/dev/null 2>&1; then
-		bun -e "for (const path of ['.agents/agents.json','plugins/dotclaude/.claude-plugin/plugin.json','plugins/dotclaude/.codex-plugin/plugin.json','plugins/dotclaude/gemini-extension/gemini-extension.json']) { JSON.parse(await Bun.file(path).text()); } console.log('json ok')"
+		bun -e "for (const path of ['.agents/agents.json','plugins/dotagent/.claude-plugin/plugin.json','plugins/dotagent/.codex-plugin/plugin.json','plugins/dotagent/gemini-extension/gemini-extension.json']) { JSON.parse(await Bun.file(path).text()); } console.log('json ok')"
 	else
 		echo "[WARN] bun unavailable; skipped JSON manifest parse fallback" >&2
 	fi

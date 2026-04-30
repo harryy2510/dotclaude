@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# setup.sh: sync DotClaude conventions into Claude and Codex global instruction files.
+# setup.sh: sync DotAgent conventions into Claude and Codex global instruction files.
 # Usage: setup.sh
 #
 # Conventions are wrapped in managed fences. Re-running setup replaces only the
@@ -15,10 +15,10 @@ CODEX_AGENTS="$HOME/.codex/AGENTS.md"
 PLUGIN_CLAUDE="$PLUGIN_DIR/CLAUDE.md"
 PLUGIN_CODEX="$PLUGIN_DIR/AGENTS.md"
 
-CLAUDE_START="<!-- DOTCLAUDE:START -->"
-CLAUDE_END="<!-- DOTCLAUDE:END -->"
-CODEX_START="<!-- DOTCLAUDE-AGENTS:START -->"
-CODEX_END="<!-- DOTCLAUDE-AGENTS:END -->"
+CLAUDE_START="<!-- DOTAGENT:START -->"
+CLAUDE_END="<!-- DOTAGENT:END -->"
+CODEX_START="<!-- DOTAGENT-AGENTS:START -->"
+CODEX_END="<!-- DOTAGENT-AGENTS:END -->"
 
 sync_managed_file() {
 	local source_file="$1"
@@ -91,7 +91,7 @@ sync_managed_file() {
 	fi
 }
 
-echo "Setting up DotClaude..."
+echo "Setting up DotAgent..."
 
 sync_managed_file "$PLUGIN_CLAUDE" "$CLAUDE_MD" "$CLAUDE_START" "$CLAUDE_END" "Claude"
 sync_managed_file "$PLUGIN_CODEX" "$CODEX_AGENTS" "$CODEX_START" "$CODEX_END" "Codex"
@@ -102,4 +102,4 @@ else
 	echo "[OK] agent-analyzer already installed"
 fi
 
-echo "[OK] DotClaude setup complete"
+echo "[OK] DotAgent setup complete"

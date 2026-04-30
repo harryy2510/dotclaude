@@ -1,4 +1,4 @@
-<!-- DOTCLAUDE-AGENTS:START -->
+<!-- DOTAGENT-AGENTS:START -->
 # Global Agent Guidelines
 
 These rules apply to every agent session and every project unless a more specific repository instruction overrides them.
@@ -86,8 +86,8 @@ These rules apply to every agent session and every project unless a more specifi
 
 - Before claiming work is complete, run the repo's relevant check command when practical.
 - Prefer `bun run check` when the repo defines it.
-- Run `/skill-lint` or `plugins/dotclaude/scripts/skill-lint.sh` when agent, skill, command, or plugin instruction files change.
+- Run `/skill-lint` or `plugins/dotagent/scripts/skill-lint.sh` when agent, skill, command, or plugin instruction files change.
 - Run `bunx @harryy/agent-toolkit repo check` in agentized repos once the toolkit is available.
 - Run `agents sync --check` when `AGENTS.md` or `.agents/` changed.
 - If checks are not run, state why.
-<!-- DOTCLAUDE-AGENTS:END -->
+<!-- DOTAGENT-AGENTS:END -->

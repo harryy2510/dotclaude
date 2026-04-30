@@ -1,5 +1,5 @@
 {
-  "name": "dotclaude",
+  "name": "dotagent",
   "version": "1.6.0",
   "description": "Agent conventions, skills, and tooling for full-stack TypeScript projects.",
   "author": {
@@ -7,8 +7,8 @@
     "email": "harryy2510@gmail.com",
     "url": "https://github.com/harryy2510"
   },
-  "homepage": "https://github.com/harryy2510/dotclaude",
-  "repository": "https://github.com/harryy2510/dotclaude",
+  "homepage": "https://github.com/harryy2510/dotagent",
+  "repository": "https://github.com/harryy2510/dotagent",
   "license": "MIT",
   "keywords": [
     "agents",
@@ -20,9 +20,9 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "DotClaude",
+    "displayName": "DotAgent",
     "shortDescription": "Agent conventions, skills, and tooling for TypeScript projects.",
-    "longDescription": "DotClaude provides focused skills and shared rules for full-stack TypeScript, React, Supabase, Cloudflare, UI, testing, and quality workflows.",
+    "longDescription": "DotAgent provides focused skills and shared rules for full-stack TypeScript, React, Supabase, Cloudflare, UI, testing, and quality workflows.",
     "developerName": "Hariom Sharma",
     "category": "Development",
     "capabilities": [
@@ -30,9 +30,9 @@
       "Review",
       "Write"
     ],
-    "websiteURL": "https://github.com/harryy2510/dotclaude",
+    "websiteURL": "https://github.com/harryy2510/dotagent",
     "defaultPrompt": [
-      "Review this repo against DotClaude conventions.",
+      "Review this repo against DotAgent conventions.",
       "Set up project conventions for this TypeScript app.",
       "Find AI slop and risky code in this change."
     ],

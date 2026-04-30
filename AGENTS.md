@@ -1,8 +1,8 @@
-# DotClaude Repository Instructions
+# DotAgent Repository Instructions
 
 ## Purpose
 
-This repository contains the DotClaude plugin and the shared agent rules it installs. Keep plugin behavior agent-agnostic where possible while preserving Claude Code plugin compatibility.
+This repository contains the DotAgent plugin and the shared agent rules it installs. Keep plugin behavior agent-agnostic where possible while preserving Claude Code plugin compatibility.
 
 ## Agent Sync
 
@@ -15,13 +15,13 @@ This repository contains the DotClaude plugin and the shared agent rules it inst
 
 ## Plugin Layout
 
-- `plugins/dotclaude/.claude-plugin/plugin.json` is the Claude Code manifest.
-- `plugins/dotclaude/.codex-plugin/plugin.json` is the Codex plugin manifest.
-- `plugins/dotclaude/gemini-extension/` is the Gemini CLI extension wrapper. It links to the shared `AGENTS.md` and `skills/` without exposing Claude-only agent definitions to Gemini.
-- `plugins/dotclaude/CLAUDE.md` is the Claude Code compatibility rules file for the plugin package.
-- `plugins/dotclaude/AGENTS.md` is the shared global rules source for agent-agnostic setup.
-- `plugins/dotclaude/skills/` should stay usable as focused skill instructions across compatible agents.
-- `plugins/dotclaude/scripts/setup.sh` and `teardown.sh` must preserve user content outside managed fences.
+- `plugins/dotagent/.claude-plugin/plugin.json` is the Claude Code manifest.
+- `plugins/dotagent/.codex-plugin/plugin.json` is the Codex plugin manifest.
+- `plugins/dotagent/gemini-extension/` is the Gemini CLI extension wrapper. It links to the shared `AGENTS.md` and `skills/` without exposing Claude-only agent definitions to Gemini.
+- `plugins/dotagent/CLAUDE.md` is the Claude Code compatibility rules file for the plugin package.
+- `plugins/dotagent/AGENTS.md` is the shared global rules source for agent-agnostic setup.
+- `plugins/dotagent/skills/` should stay usable as focused skill instructions across compatible agents.
+- `plugins/dotagent/scripts/setup.sh` and `teardown.sh` must preserve user content outside managed fences.
 
 ## Development Rules
 
@@ -36,5 +36,5 @@ This repository contains the DotClaude plugin and the shared agent rules it inst
 - Keep scripts POSIX-friendly bash where possible.
 - Do not edit files whose names start with `.env`.
 - Do not run destructive cleanup commands or `git push` unless the user explicitly asks in the current message.
-- Run `plugins/dotclaude/scripts/skill-lint.sh` when agent, skill, command, or plugin instruction files change.
+- Run `plugins/dotagent/scripts/skill-lint.sh` when agent, skill, command, or plugin instruction files change.
 - Validate JSON manifests after editing them.

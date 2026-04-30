@@ -1,5 +1,5 @@
 ---
-description: Remove DotClaude conventions from Claude and Codex global instruction files.
+description: Remove DotAgent conventions from Claude and Codex global instruction files.
 ---
 
 Run the teardown script:

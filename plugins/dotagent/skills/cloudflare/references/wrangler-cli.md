@@ -431,7 +431,7 @@ wrangler secrets-store secret delete <STORE_ID> my-secret
 
 ## Pages (Legacy / Existing Pages Projects Only)
 
-Prefer Workers Static Assets for new DotClaude projects. Use Pages commands only when the repo already uses Cloudflare Pages or the user explicitly asks for Pages.
+Prefer Workers Static Assets for new DotAgent projects. Use Pages commands only when the repo already uses Cloudflare Pages or the user explicitly asks for Pages.
 
 ```bash
 wrangler pages project create my-site

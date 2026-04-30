@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center">⚡ DotClaude</h1>
+  <h1 align="center">⚡ DotAgent</h1>
   <p align="center">
     <strong>Your agent setup: skills, agents, commands, tooling, and shared rules in one plugin.</strong>
   </p>
@@ -28,14 +28,14 @@
 
 ---
 
-> **Note:** DotClaude is distributed through the [agent-toolkit](https://github.com/harryy2510/agent-toolkit) marketplace.
+> **Note:** DotAgent is distributed through the [agent-toolkit](https://github.com/harryy2510/agent-toolkit) marketplace.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────┐
 │                                                                            │
 │   claude plugin marketplace add harryy2510/agent-toolkit                  │
-│   claude plugin install dotclaude@agent-toolkit                           │
-│   /dotclaude:setup                                                 │
+│   claude plugin install dotagent@agent-toolkit                           │
+│   /dotagent:setup                                                 │
 │                                                                            │
 │   That's it. Every project. Every agent. Same standards.                   │
 │                                                                            │
@@ -111,9 +111,9 @@ Type these directly in Claude Code:
 | `/repo-map` | 🗺️ Legacy fallback: runs agent-analyzer → builds symbol index |
 | `/deslop` | 🧹 Legacy fallback: scans codebase for slop |
 | `/skill-lint` | ✅ Validates skills + agents → checks frontmatter, size, refs, triggers |
-| `/dotclaude:setup` | 🔧 One-time: installs managed global rules for Claude and Codex |
-| `/dotclaude:update` | 🔄 Updates plugin + refreshes Claude and Codex conventions |
-| `/dotclaude:uninstall` | 🗑️ Removes DotClaude conventions from Claude and Codex global instruction files |
+| `/dotagent:setup` | 🔧 One-time: installs managed global rules for Claude and Codex |
+| `/dotagent:update` | 🔄 Updates plugin + refreshes Claude and Codex conventions |
+| `/dotagent:uninstall` | 🗑️ Removes DotAgent conventions from Claude and Codex global instruction files |
 
 ```
   bunx @harryy/agent-toolkit repo intel   ← builds local repo context
@@ -189,7 +189,7 @@ The `agents-orchestrator` enforces an 8-phase workflow:
 ## 📁 Project Structure
 
 ```
-dotclaude/
+dotagent/
 ├── CLAUDE.md                ← Claude-specific plugin compatibility rules
 ├── AGENTS.md                ← Shared agent conventions for global symlinks
 ├── .claude-plugin/          ← Claude Code plugin manifest
@@ -216,9 +216,9 @@ dotclaude/
 │   ├── repo-map.md
 │   ├── deslop.md
 │   ├── skill-lint.md
-│   ├── dotclaude-setup.md
-│   ├── dotclaude-update.md
-│   └── dotclaude-uninstall.md
+│   ├── setup.md
+│   ├── update.md
+│   └── uninstall.md
 └── scripts/                 ← Pure bash tooling (0 tokens)
     ├── deslop.sh
     ├── install-repo-map.sh
@@ -240,16 +240,16 @@ Claude Code:
 claude plugin marketplace add harryy2510/agent-toolkit
 
 # 2. Install the plugin
-claude plugin install dotclaude@agent-toolkit
+claude plugin install dotagent@agent-toolkit
 
 # 3. Run setup in Claude Code
-/dotclaude:setup
+/dotagent:setup
 ```
 
 Gemini CLI:
 
 ```bash
-gemini extensions link plugins/dotclaude/gemini-extension
+gemini extensions link plugins/dotagent/gemini-extension
 ```
 
 Codex:
@@ -259,7 +259,7 @@ bunx @harryy/agent-toolkit setup --yes
 bunx @harryy/agent-toolkit repo migrate
 ```
 
-Codex consumes `AGENTS.md` directly and can read the local plugin metadata at `plugins/dotclaude/.codex-plugin/plugin.json`.
+Codex consumes `AGENTS.md` directly and can read the local plugin metadata at `plugins/dotagent/.codex-plugin/plugin.json`.
 
 For repo-local agent sync:
 
@@ -272,34 +272,34 @@ agents watch --path .
 
 ```bash
 claude plugin marketplace update agent-toolkit
-claude plugin update dotclaude@agent-toolkit
+claude plugin update dotagent@agent-toolkit
 ```
 
 The marketplace update fetches the latest agent-toolkit index. The plugin update pulls the new version. Both steps needed.
 
-Or from Claude Code: `/dotclaude:update`
+Or from Claude Code: `/dotagent:update`
 
 ### Uninstall
 
-Run `/dotclaude:uninstall` first (removes managed conventions from Claude and Codex global instruction files), then:
+Run `/dotagent:uninstall` first (removes managed conventions from Claude and Codex global instruction files), then:
 
 ```bash
-claude plugin uninstall dotclaude@agent-toolkit
+claude plugin uninstall dotagent@agent-toolkit
 ```
 
 ### What happens where
 
 ```
   marketplace add           →  Registers harryy2510/agent-toolkit as a plugin source
-  plugin install              →  Installs dotclaude from the marketplace
+  plugin install              →  Installs dotagent from the marketplace
                                  Skills, agents, commands available immediately
 
-  /dotclaude:setup →  Managed rules inserted into ~/.claude/CLAUDE.md and ~/.codex/AGENTS.md
+  /dotagent:setup →  Managed rules inserted into ~/.claude/CLAUDE.md and ~/.codex/AGENTS.md
 
   plugin update              →  Plugin cache refreshed from git
-  /dotclaude:update → Same + refreshes global conventions
+  /dotagent:update → Same + refreshes global conventions
 
-  /dotclaude:uninstall → Removes managed conventions from global instruction files
+  /dotagent:uninstall → Removes managed conventions from global instruction files
   plugin uninstall              →  Removes plugin from cache
 ```
 

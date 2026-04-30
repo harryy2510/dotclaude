@@ -25,6 +25,8 @@ This repository contains the DotAgent plugin and the shared agent rules it insta
 
 ## Development Rules
 
+- Create git worktrees inside the same repository under `.worktrees/`.
+- Keep `.worktrees/` gitignored.
 - Prefer `bun` and `bunx` in Bun projects.
 - Use TypeScript for JavaScript-platform source files. Do not add `.js` or `.jsx` source files.
 - Use `oxlint --type-aware --type-check`, not `tsc`.

@@ -30,6 +30,8 @@ These rules apply to every agent session and every project unless a more specifi
 - Never push to `main` or `master` unless the user says the exact words and confirms after you warn them.
 - Never skip git hooks with `--no-verify`, `--no-gpg-sign`, or similar flags.
 - Any commit you create must use Conventional Commit format, for example `feat: add repo intelligence` or `fix(cli): preserve user files`.
+- Create git worktrees inside the same repository under `.worktrees/`.
+- Keep `.worktrees/` gitignored.
 
 ### Environment Files
 

@@ -20,7 +20,7 @@ Read the `toolchain` skill first. It owns the current defaults.
 - Use Bun for package management and TypeScript execution.
 - Use TypeScript for new JavaScript-platform source code.
 - Do not create `.js` or `.jsx` source files for new code.
-- Do not add npm, yarn, pnpm, or npx workflows unless the repo is explicitly legacy and the user approves.
+- Do not add npm, yarn, pnpm, or npx workflows.
 
 ### Oxlint + Oxfmt
 

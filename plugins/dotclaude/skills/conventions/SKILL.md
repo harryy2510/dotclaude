@@ -5,7 +5,7 @@ description: "Use once per project to install repo-level agent conventions, hook
 
 # Conventions
 
-Use Agent Toolkit as the convention gate. Do not install separate lint-staged, ESLint, or Prettier enforcement unless the repo is explicitly legacy and the user approves.
+Use Agent Toolkit as the convention gate. Do not install separate lint-staged, ESLint, or Prettier enforcement.
 
 ## Setup
 
@@ -54,6 +54,7 @@ Run:
 
 ```bash
 bunx @harryy/agent-toolkit repo check
+agents sync --check
 ```
 
-Run `agents sync --path . --check` only as an explicit local maintenance check when `AGENTS.md` or `.agents/` changed. It can report generated local or user-level integration drift and is not the default CI gate.
+Run `agents sync --check` only when `AGENTS.md` or `.agents/` changed.

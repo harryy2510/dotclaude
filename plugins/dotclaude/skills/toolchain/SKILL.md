@@ -16,7 +16,7 @@ Use this skill before changing scripts, package metadata, linting, formatting, t
 - Use `oxlint --type-aware --type-check` for linting and type checking.
 - Use `oxfmt` for formatting.
 - Use Husky for git hooks. Do not introduce `.githooks` or ad hoc hook folders.
-- Do not add ESLint, Prettier, `tsc --noEmit`, npm, yarn, pnpm, or npx workflows unless the repo is explicitly legacy and the user approves.
+- Do not add ESLint, Prettier, `tsc --noEmit`, npm, yarn, pnpm, or npx workflows.
 
 ## Package Scripts
 
@@ -56,7 +56,7 @@ For Rust plus Bun repos:
 ## Git
 
 - Any commit created by an agent must use Conventional Commit format.
-- Examples: `feat: add repo intelligence`, `fix(cli): preserve user files`, `chore!: drop legacy setup`.
+- Examples: `feat: add repo intelligence`, `fix(cli): preserve user files`, `chore!: remove old setup`.
 - Do not skip hooks.
 - Use Husky repo-local hooks that call `bunx @harryy/agent-toolkit`.
 

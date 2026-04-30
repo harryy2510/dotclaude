@@ -41,7 +41,7 @@ These rules apply to Claude Code sessions unless a more specific repository inst
 - Use `oxlint` instead of ESLint.
 - Use `oxfmt` instead of Prettier.
 - Use Husky for git hooks. Do not introduce `.githooks` or ad hoc hook folders.
-- Do not add npm, yarn, pnpm, npx, ESLint, Prettier, or `tsc --noEmit` workflows unless the repo is explicitly legacy and the user approves.
+- Do not add npm, yarn, pnpm, npx, ESLint, Prettier, or `tsc --noEmit` workflows.
 
 ### Package Scripts
 

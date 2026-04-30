@@ -28,6 +28,4 @@ agents sync --path . --check
 agents watch --path .
 ```
 
-`agents sync --check` can report generated local or user-level integration drift. Treat it as a local maintenance check unless CI is explicitly configured for a clean sync environment.
-
 Note: Windsurf writes user-level MCP config when synced. Antigravity is enabled for generated snapshots, but global sync is disabled by default.

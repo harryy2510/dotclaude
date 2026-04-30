@@ -45,7 +45,7 @@ bash scripts/deslop.sh --staged
 
 ### As pre-commit hook
 
-Add to `.husky/pre-commit` (after conventions check, before lint-staged):
+Add to `.husky/pre-commit` after the conventions check:
 
 ```bash
 bash scripts/deslop.sh --staged

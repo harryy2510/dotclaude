@@ -302,6 +302,7 @@ jobs:
         env:
           DEPLOY_ENV: ${{ inputs.environment }}
         run: |
+          # Workflow-owned push. Agents still must not run git push locally.
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           SUFFIX="${DEPLOY_ENV:+${DEPLOY_ENV}-}"

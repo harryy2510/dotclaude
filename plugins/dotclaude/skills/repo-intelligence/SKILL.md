@@ -1,11 +1,13 @@
 ---
 name: repo-intelligence
-description: "Use before exploring a codebase, reviewing code, planning a refactor, enforcing agent rules, or finishing work."
+description: "Use when exploring a codebase, reviewing code, planning a refactor, enforcing agent rules, or finishing work; load before broad inspection."
 ---
 
 # Repo Intelligence
 
 Use one toolkit entrypoint for context and enforcement.
+
+Before building unfamiliar capability, search existing repo patterns and current official docs. Prefer proven local/library behavior over inventing a bespoke path.
 
 ## Preferred Workflow
 

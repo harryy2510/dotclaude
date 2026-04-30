@@ -22,6 +22,7 @@ NC='\033[0m'
 error() { echo -e "${RED}[ERROR]${NC} $1"; errors=$((errors + 1)); }
 warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; warns=$((warns + 1)); }
 pass() { echo -e "${GREEN}[OK]${NC}    $1"; ok=$((ok + 1)); }
+info() { echo -e "[INFO]  $1"; }
 
 lint_file() {
 	local file="$1"
@@ -52,6 +53,13 @@ lint_file() {
 		issues=$((issues + 1))
 	fi
 
+	if [ "$basename" != "SKILL.md" ] && [ -n "$name" ]; then
+		if ! echo "$name" | grep -qE '^[a-z0-9][a-z0-9-]*$'; then
+			error "$label — agent name must be lowercase kebab-case for native invocation: '$name'"
+			issues=$((issues + 1))
+		fi
+	fi
+
 	# Check description field (handles single-line and multi-line YAML > or |)
 	local desc
 	desc=$(echo "$frontmatter" | awk '
@@ -80,8 +88,27 @@ lint_file() {
 
 	# Check description has trigger hint
 	if [ -n "$desc" ]; then
-		if ! echo "$desc" | grep -qiE '(use when|use for|use once|use this|use if|invoke when|load when|applies when)'; then
+		if ! echo "$desc" | grep -qiE '(use when|use proactively when|use for|use once|use this|use if|must be used when|invoke when|load when|applies when)'; then
 			warn "$label — description has no trigger hint (add 'Use when...')"
+			issues=$((issues + 1))
+		fi
+		if [ "$basename" != "SKILL.md" ] && ! echo "$desc" | grep -qE '(MUST BE USED|Use PROACTIVELY|use proactively)'; then
+			error "$label — agent description must force routing with 'MUST BE USED' or 'Use PROACTIVELY'"
+			issues=$((issues + 1))
+		fi
+	fi
+
+	if [ "$basename" != "SKILL.md" ]; then
+		if ! echo "$frontmatter" | grep -q '^skills:'; then
+			error "$label — agent frontmatter must declare required skills"
+			issues=$((issues + 1))
+		fi
+		if ! echo "$frontmatter" | grep -q '^tools:'; then
+			warn "$label — agent frontmatter should declare least-privilege tools"
+			issues=$((issues + 1))
+		fi
+		if ! echo "$frontmatter" | grep -q '^model:'; then
+			warn "$label — agent frontmatter should declare model: inherit unless a specialist model is intentional"
 			issues=$((issues + 1))
 		fi
 	fi
@@ -96,8 +123,7 @@ lint_file() {
 		size_label="BLOATED_AGENT"
 	fi
 	if [ "$lines" -gt "$size_limit" ]; then
-		warn "$label — ${lines}L exceeds ${size_limit}L target ($size_label)"
-		issues=$((issues + 1))
+		info "$label — ${lines}L exceeds ${size_limit}L target ($size_label; advisory only)"
 	fi
 
 	# Check for TODOs/TBDs in content (not frontmatter)

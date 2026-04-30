@@ -4,7 +4,7 @@
     <strong>Your agent setup: skills, agents, commands, tooling, and shared rules in one plugin.</strong>
   </p>
   <p align="center">
-    <code>20 skills</code> · <code>19 agents</code> · <code>6 commands</code> · <code>zero bloat</code>
+    <code>21 skills</code> · <code>20 agents</code> · <code>6 commands</code> · <code>zero bloat</code>
   </p>
 </p>
 
@@ -70,12 +70,13 @@ Loaded on-demand. Only the relevant skill enters context — the rest cost 0 tok
 | 🗺️ | `repo-map` | Legacy fallback symbol index when toolkit repo intelligence is insufficient |
 | 🧹 | `deslop` | Legacy fallback slop scanner when toolkit checks are unavailable |
 | 🧪 | `testing` | Vitest + Testing Library + Playwright, file conventions, what to test |
+| 🐞 | `debugging` | Root-cause workflow for bugs, regressions, flakes, incidents, and fix verification |
 
 ---
 
 ## 🤖 Agents
 
-**19 specialists. All under 80 lines. Pure signal, no fluff.**
+**20 specialists. Kebab-case native names, proactive triggers, least-privilege tools, and required skill preloads.**
 
 ```
 ╔══════════════════════════════════════════════════════════════════════╗
@@ -87,9 +88,10 @@ Loaded on-demand. Only the relevant skill enters context — the rest cost 0 tok
 ║  Senior Developer        E2E Test Writer                             ║
 ║  Database Optimizer      E2E Test Runner    🎛️ ORCHESTRATION         ║
 ║  DevOps Automator                           ────────────────         ║
-║  Security Engineer                          Agents                   ║
-║  Rapid Prototyper                           Orchestrator             ║
-║  Software Architect                         (8-phase workflow)       ║
+║  Security Engineer                          Agents Orchestrator      ║
+║  Debugger                                   (8-phase workflow)       ║
+║  Rapid Prototyper                                                    ║
+║  Software Architect                                                  ║
 ║  Code Reviewer                                                       ║
 ║  Git Workflow Master                                                 ║
 ║  Technical Writer                                                    ║
@@ -158,6 +160,8 @@ bunx @harryy/agent-toolkit repo check
 
 ## 🎯 Agent Orchestration
 
+The `agent-routing` skill maps work types to specialists and requires a routing receipt before substantial work. When the host supports native subagents and policy allows it, the matching specialist is invoked; otherwise the role profile becomes the current-agent operating mode. Multi-agent orchestration stays in the main thread so specialists can actually be called directly.
+
 The `agents-orchestrator` enforces an 8-phase workflow:
 
 ```
@@ -168,9 +172,9 @@ The `agents-orchestrator` enforces an 8-phase workflow:
   ├──────────────┤
   │ 3. Plan      │ ──→  Propose approach, identify changes
   ├──────────────┤
-  │ 4. APPROVE   │ ──→  ⛔ HARD GATE — user must approve
+  │ 4. APPROVE   │ ──→  Gate broad/risky work or plan-mode tasks
   ├──────────────┤
-  │ 5. Implement │ ──→  Spawn specialist agents, write code
+  │ 5. Implement │ ──→  Invoke specialists, write code
   ├──────────────┤
   │ 6. Review    │ ──→  Code reviewer agent, fix findings
   ├──────────────┤
@@ -194,13 +198,13 @@ dotclaude/
 │   ├── gemini-extension.json
 │   ├── AGENTS.md            ← symlink to ../AGENTS.md
 │   └── skills               ← symlink to ../skills
-├── agents/                  ← 19 specialist agents
+├── agents/                  ← 20 specialist agents
 │   ├── agents-orchestrator.md
 │   ├── engineering-*.md
 │   ├── testing-*.md
 │   ├── product-manager.md
 │   └── design-ux-architect.md
-├── skills/                  ← 20 on-demand skills
+├── skills/                  ← 21 on-demand skills
 │   ├── conventions/
 │   ├── scaffold/
 │   ├── ui/
@@ -332,12 +336,17 @@ bunx @harryy/agent-toolkit repo check
 1. Create `agents/<name>.md`:
    ```yaml
    ---
-   name: My Agent
-   description: Use when [trigger]. Does [what].
+   name: my-agent
+   description: "MUST BE USED when [trigger]. Use PROACTIVELY for [work type]."
+   model: inherit
+   tools: Read, Grep, Glob, Bash
+   skills:
+     - toolchain
+     - repo-intelligence
    color: blue
    ---
    ```
-2. Under 80 lines. Role, rules, patterns. No fluff.
+2. Keep it concise, but do not delete essential operating knowledge just to satisfy a line target. Include role, triggers, required skills, tools, rules, and outputs.
 3. Run `/skill-lint agents`
 
 ### Contributing rules

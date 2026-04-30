@@ -25,6 +25,8 @@ export type LoginInput = z.infer<typeof loginSchema>
 - Error syntax: `{ error: '...' }` -- NOT `{ message: '...' }`
 - Types inferred from schemas: `type X = z.infer<typeof xSchema>`
 - Every field gets a descriptive error message
+- Use `safeParse()` / `safeParseAsync()` at trust boundaries when you need a typed result instead of throwing.
+- Do not enable `reportInput` for user input unless you are certain sensitive data cannot be logged.
 
 ## Form Initialization
 
@@ -52,7 +54,7 @@ Located in `libs/form.ts`. Wraps `zodResolver()` to handle `z.coerce` schemas co
 
 ## Field Watching
 
-ALWAYS use `useWatch()` -- NEVER `form.watch()`.
+Use `useWatch()` for render subscriptions because it isolates re-renders at the hook level. Avoid `form.watch()` in components that render frequently.
 
 ```typescript
 // Inside <Form> (FormProvider): no control needed

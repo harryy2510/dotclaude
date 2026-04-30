@@ -7,7 +7,7 @@ description: "Use when setting up DX tooling (linting, formatting, git hooks, ty
 
 Covers three domains: DX tooling (lint/format/hooks), encrypted environment management (dotenvx), and GitHub Actions CI/CD.
 
-Env files are user-owned. Agents may add tooling, scripts, docs, and CI workflow code for env management, but must not create, edit, encrypt, decrypt, stage, or commit any `.env*` file. Give the user exact commands to run when env file contents need to change.
+Env files are user-owned. Agents may add tooling, scripts, docs, and CI workflow code for env management, but must not create, edit, encrypt, decrypt, stage, commit, or run commands that write any `.env*` file. Give the user exact commands to run when env file contents need to change.
 
 ---
 
@@ -86,7 +86,7 @@ Hooks should call `bunx @harryy/agent-toolkit repo check` and enforce Convention
 
 ### generate-vite-env.ts
 
-Reads `VITE_*` vars from `.env.development`, generates `src/vite-env.d.ts` with typed `ImportMetaEnv`. Run: `bun scripts/generate-vite-env.ts`
+May read user-owned env files to generate non-env artifacts such as `src/vite-env.d.ts`. It must not modify `.env*`.
 
 ### .gitignore
 
@@ -108,9 +108,9 @@ dist/
 
 1. `bun add @dotenvx/dotenvx`
 2. Ask the user to encrypt env files themselves: `dotenvx encrypt -f .env.development --stdout > .env.development.encrypted` (same for production)
-3. Add `postinstall`, `env:encrypt`, `env:local`, `sync-env` scripts to `package.json`
+3. Add env-management scripts only when the user requested dotenvx setup; do not run scripts that write `.env*`
 4. Do not add auto-encryption hooks unless the user explicitly asks; hooks that write `.env*` files are user-owned behavior
-5. Create `scripts/generate-env-local.ts` for local Supabase overrides
+5. If local Supabase overrides are needed, create a helper that prints env content to stdout; the user redirects it to `.env.development.local`
 6. Create `scripts/sync-env.ts` to push secrets to Cloudflare + Supabase
 
 ### Key Script Patterns
@@ -167,7 +167,7 @@ Workflows auto-detect the project's env tier before syncing secrets:
 ### Shared Patterns
 
 - Both use concurrency groups with `cancel-in-progress: false` (never cancel deploys mid-flight)
-- Both include `actions/setup-node@v6` with `node-version: '24'` (required for some tooling)
+- All GitHub Actions workflows that need Node.js use `actions/setup-node@v6` with `node-version: '24'`.
 - Both decrypt env files via `postinstall` during `bun install`
 - Both support single-env and multi-env projects via tier detection
 - Uses `@utilities-studio/sync-env@latest` for secret syncing (not local `bun sync-env`)
@@ -194,7 +194,7 @@ Claude Code workflows (`claude.yml`, `claude-code-review.yml`) follow the same d
 - **`wrangler versions secret bulk`**: Individual `secret put` calls race and silently drop secrets.
 - **GITHUB_ENV**: Skip `NODE_OPTIONS` (quoted values break it). Always `::add-mask::$value` before writing secrets.
 - **Supabase auto-scan limitation**: Only picks up literal `Deno.env.get('KEY')`. Dynamic key access won't be detected.
-- **Node.js in CI**: Always include `actions/setup-node@v6` with `node-version: '24'` alongside bun.
+- **Node.js in CI**: Always include `actions/setup-node@v6` with `node-version: '24'` alongside bun when a Node runtime is needed.
 - **`cloudflare/wrangler-action@v3`**: Prefer over raw `bunx wrangler deploy` -- handles API token setup and output parsing.
 - **Reusable vs composite actions**: Don't mix these up when answering GitHub Actions questions.
 - **OIDC over long-lived credentials**: Prefer OIDC when GitHub docs support it for the target cloud.

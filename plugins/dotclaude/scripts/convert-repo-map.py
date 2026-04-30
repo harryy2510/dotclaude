@@ -100,7 +100,7 @@ def convert(intel):
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print(f'Usage: {sys.argv[0]} <input.json> <output.json>')
+        sys.stderr.write(f'Usage: {sys.argv[0]} <input.json> <output.json>\n')
         sys.exit(1)
 
     with open(sys.argv[1]) as f:
@@ -112,4 +112,4 @@ if __name__ == '__main__':
         json.dump(repo_map, f, indent=2)
 
     s = repo_map['stats']
-    print(f"{s['totalFiles']} files, {s['totalSymbols']} symbols, {s['totalImports']} imports")
+    sys.stdout.write(f"{s['totalFiles']} files, {s['totalSymbols']} symbols, {s['totalImports']} imports\n")

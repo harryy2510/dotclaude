@@ -126,13 +126,13 @@ For large projects, migrate via `rolldown-vite` first:
 
 ```bash
 # Step 1: Test with rolldown-vite
-pnpm add -D rolldown-vite
+bun add -D rolldown-vite
 
 # Replace vite import in config
 import { defineConfig } from 'rolldown-vite'
 
 # Step 2: Once stable, upgrade to Vite 8
-pnpm add -D vite@8
+bun add -D vite@8
 ```
 
 ## Overriding Vite in Frameworks
@@ -141,7 +141,7 @@ When framework depends on older Vite:
 
 ```json
 {
-  "pnpm": {
+  "bun": {
     "overrides": {
       "vite": "8.0.0"
     }

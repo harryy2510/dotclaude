@@ -7,6 +7,8 @@ description: "Use when writing React Query mutations with optimistic updates, co
 
 File: `libs/query/root-provider.tsx`
 
+TanStack Query defaults are intentionally active: cached data is stale by default, stale queries refetch on mount/window focus/reconnect, inactive queries are garbage-collected after 5 minutes, and failures retry 3 times. This stack opts into manual freshness, so be deliberate when changing defaults.
+
 - `staleTime: Infinity` — data never goes stale automatically
 - `gcTime: Infinity` — never garbage-collected
 - `refetchOnMount: false`
@@ -31,6 +33,8 @@ export const contactKeys = {
 ```
 
 ## Optimistic Updates via mutative
+
+Use simple UI-level optimistic state when the mutation and list live together. Use cache-level optimistic updates only when multiple components need the pending state or when rollback matters.
 
 File: `libs/query/optimistic.ts`
 

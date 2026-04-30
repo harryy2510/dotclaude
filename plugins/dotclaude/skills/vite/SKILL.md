@@ -1,15 +1,11 @@
 ---
 name: vite
-description: Vite build tool configuration, plugin API, SSR, and Vite 8 Rolldown migration. Use when working with Vite projects, vite.config.ts, Vite plugins, or building libraries/SSR apps with Vite.
-metadata:
-  author: Anthony Fu
-  version: "2026.1.31"
-  source: Generated from https://github.com/vitejs/vite, scripts at https://github.com/antfu/skills
+description: "Vite build tool configuration, plugin API, SSR, environment variables, Environment API, and Vite 8 Rolldown migration. Use when working with Vite projects, vite.config.ts, Vite plugins, env exposure, or building libraries/SSR apps with Vite."
 ---
 
 # Vite
 
-> Based on Vite 8 beta (Rolldown-powered). Vite 8 uses Rolldown bundler and Oxc transformer.
+Based on current Vite 8 docs. Prefer retrieving `https://vite.dev/` for config, env, plugin, and migration details when exact behavior matters.
 
 Vite is a next-generation frontend build tool with fast dev server (native ESM + HMR) and optimized production builds.
 
@@ -17,6 +13,10 @@ Vite is a next-generation frontend build tool with fast dev server (native ESM +
 
 - Use TypeScript: prefer `vite.config.ts`
 - Always use ESM, avoid CommonJS
+- Never edit or create `.env*` files. Explain which variables the user should set.
+- Treat `VITE_` variables as public client bundle data; never put secrets behind that prefix.
+- Convert `import.meta.env` values from strings before numeric/boolean use.
+- Bun loads env files into `process.env` before scripts run; account for that when debugging Vite env precedence.
 
 ## Core
 

@@ -5,7 +5,7 @@ Complete command reference for Wrangler v4.x+. For quick reference, see the main
 ## Installation & Auth
 
 ```bash
-npm install -D wrangler@latest
+bun add -D wrangler@latest
 wrangler --version
 wrangler login
 wrangler whoami
@@ -14,8 +14,8 @@ wrangler whoami
 ## Quick Start
 
 ```bash
-npx wrangler init my-worker
-npx create-cloudflare@latest my-app   # Framework starter
+bunx wrangler init my-worker
+bunx create-cloudflare@latest my-app   # Framework starter
 ```
 
 ## Local Development
@@ -429,7 +429,9 @@ wrangler secrets-store secret delete <STORE_ID> my-secret
 }
 ```
 
-## Pages (Frontend Deployment)
+## Pages (Legacy / Existing Pages Projects Only)
+
+Prefer Workers Static Assets for new DotClaude projects. Use Pages commands only when the repo already uses Cloudflare Pages or the user explicitly asks for Pages.
 
 ```bash
 wrangler pages project create my-site
@@ -466,7 +468,7 @@ wrangler tail --format json         # JSON output
 ### Vitest Setup
 
 ```bash
-npm install -D @cloudflare/vitest-pool-workers vitest
+bun add -D @cloudflare/vitest-pool-workers vitest
 ```
 
 `vitest.config.ts`:
@@ -495,7 +497,7 @@ curl http://localhost:8787/__scheduled
 
 | Issue | Solution |
 |-------|----------|
-| `command not found: wrangler` | `npm install -D wrangler` |
+| `command not found: wrangler` | `bun add -D wrangler` |
 | Auth errors | `wrangler login` |
 | Startup time limit exceeded | `wrangler check startup` |
 | Type errors after config change | `wrangler types` |

@@ -15,6 +15,18 @@ Vitest for unit/integration. Playwright for E2E. Testing Library for component t
 - Reviewing test quality or coverage
 - Setting up test infrastructure
 
+## Test-First Loop
+
+For regressions, fragile logic, auth/data boundaries, or behavior with real user impact, prefer RED-GREEN-REFACTOR:
+
+1. Write or adjust a test that fails for the current bug/requirement.
+2. Run the focused test and confirm it fails for the expected reason.
+3. Implement the smallest correct change.
+4. Run the focused test until it passes, then refactor with tests green.
+5. Broaden to impacted tests/checks before completion.
+
+If test-first is impractical, state why and add the closest useful coverage before shipping.
+
 ## File Conventions
 
 - Test files colocated next to source: `foo.ts` -> `foo.test.ts`

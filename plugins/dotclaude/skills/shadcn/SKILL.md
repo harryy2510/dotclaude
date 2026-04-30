@@ -2,24 +2,24 @@
 name: shadcn
 description: Manages shadcn components and projects — adding, searching, fixing, debugging, styling, and composing UI. Provides project context, component docs, and usage examples. Applies when working with shadcn/ui, component registries, presets, --preset codes, or any project with a components.json file. Also triggers for "shadcn init", "create an app with --preset", or "switch to --preset".
 user-invocable: false
-allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(bunx --bun shadcn@latest *)
+allowed-tools: Bash(bunx shadcn@latest *)
 ---
 
 # shadcn/ui
 
-Components added as source code via the CLI. Run all CLI commands using the project's package runner (`bunx --bun shadcn@latest`, `pnpm dlx shadcn@latest`, or `npx shadcn@latest`). Examples below use `npx` — substitute the correct runner.
+Components are added as source code via the CLI. Use Bun: `bunx shadcn@latest`. Do not use `npx`, `pnpm dlx`, or `yarn dlx` in DotClaude projects.
 
 ## Current Project Context
 
 ```json
-!`npx shadcn@latest info --json`
+!`bunx shadcn@latest info --json`
 ```
 
-Use `npx shadcn@latest docs <component>` for documentation and example URLs.
+Use `bunx shadcn@latest docs <component>` for documentation and example URLs.
 
 ## Principles
 
-1. **Use existing components first.** Use `npx shadcn@latest search` before writing custom UI.
+1. **Use existing components first.** Use `bunx shadcn@latest search` before writing custom UI.
 2. **Compose, don't reinvent.** Settings page = Tabs + Card + form controls.
 3. **Use built-in variants before custom styles.** `variant="outline"`, `size="sm"`, etc.
 4. **Use semantic colors.** `bg-primary`, `text-muted-foreground` — never raw values like `bg-blue-500`.
@@ -92,10 +92,10 @@ Each links to a file with Incorrect/Correct code pairs.
 
 ## Workflow
 
-1. **Get context** — already injected. Refresh with `npx shadcn@latest info`.
+1. **Get context** — already injected. Refresh with `bunx shadcn@latest info`.
 2. **Check installed** — before `add`, check `components` list or list `resolvedPaths.ui` dir.
-3. **Find** — `npx shadcn@latest search`. **Get docs** — `npx shadcn@latest docs <component>`.
-4. **Install** — `npx shadcn@latest add`. Use `--dry-run` and `--diff` to preview updates.
+3. **Find** — `bunx shadcn@latest search`. **Get docs** — `bunx shadcn@latest docs <component>`.
+4. **Install** — `bunx shadcn@latest add`. Use `--dry-run` and `--diff` to preview updates.
 5. **Fix third-party imports** — after adding community components, rewrite hardcoded paths to match project aliases.
 6. **Review added files** — verify composition, imports, icon library match. Fix issues before moving on.
 7. **Registry must be explicit** — never guess which registry. Ask if unspecified.
@@ -105,22 +105,22 @@ Each links to a file with Incorrect/Correct code pairs.
 
 Use `--dry-run` and `--diff` to merge upstream changes. **NEVER fetch raw files from GitHub.**
 
-1. `npx shadcn@latest add <component> --dry-run` — see affected files.
-2. `npx shadcn@latest add <component> --diff <file>` — see changes.
+1. `bunx shadcn@latest add <component> --dry-run` — see affected files.
+2. `bunx shadcn@latest add <component> --diff <file>` — see changes.
 3. No local changes -> overwrite. Has local changes -> analyze and merge. **Never `--overwrite` without user approval.**
 
 ## Quick Reference
 
 ```bash
-npx shadcn@latest init --preset base-nova              # Init existing project
-npx shadcn@latest init --name my-app --preset base-nova # New project
-npx shadcn@latest add button card dialog                # Add components
-npx shadcn@latest add --all                             # Add all
-npx shadcn@latest search @shadcn -q "sidebar"           # Search
-npx shadcn@latest docs button dialog select             # Get docs URLs
-npx shadcn@latest view @shadcn/button                   # View uninstalled
-npx shadcn@latest add button --dry-run                  # Preview
-npx shadcn@latest add button --diff button.tsx          # Diff
+bunx shadcn@latest init --preset base-nova               # Init existing project
+bunx shadcn@latest init --name my-app --preset base-nova # New project
+bunx shadcn@latest add button card dialog                # Add components
+bunx shadcn@latest add --all                             # Add all
+bunx shadcn@latest search @shadcn -q "sidebar"           # Search
+bunx shadcn@latest docs button dialog select             # Get docs URLs
+bunx shadcn@latest view @shadcn/button                   # View uninstalled
+bunx shadcn@latest add button --dry-run                  # Preview
+bunx shadcn@latest add button --diff button.tsx          # Diff
 ```
 
 **Presets:** `base-nova`, `radix-nova`. **Templates:** `next`, `vite`, `start`, `react-router`, `astro` (+ `--monorepo`), `laravel`.

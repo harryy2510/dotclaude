@@ -7,11 +7,13 @@ description: "Use when building routes, layouts, breadcrumbs, server functions, 
 
 File-based routing via TanStack Router. Router context type: `{ queryClient, session, user }`.
 
+`getRouter()` must create a new router instance per request/session. Do not import a singleton router into server code.
+
 Root `beforeLoad` primes auth via `ensureQueryData`. Route loaders prime cache with `ensureQueryData`, components read via `useQuery()` — NEVER `useLoaderData()`.
 
 Links: `<Link to="/items/$id" params={{ id }} search={{ tab: 'details' }} />` — never template strings.
 
-**Never run `npx @tanstack/router-cli generate`** — `bun run dev` generates the route tree automatically.
+Never run TanStack Router CLI generation manually — `bun run dev` generates the route tree automatically.
 
 ## Layouts
 
@@ -60,6 +62,8 @@ Root route sets defaults: charset, viewport, title, description, theme-color, fa
 
 ## Server Functions
 
+Server functions are callable across the network boundary. Treat every input as untrusted even when a route guard exists.
+
 ```tsx
 import { createServerFn } from '@tanstack/react-start'
 
@@ -67,8 +71,6 @@ const getItems = createServerFn({ method: 'GET' })
   .inputValidator(z.object({ cursor: z.string().optional() }))
   .handler(async ({ input }) => {
     const supabase = getSupabaseServerClient()
-    // Auth is already handled at the route level via beforeLoad in _authed.tsx.
-    // Do NOT check for user/session here — no redundant auth checks.
     const { data, error } = await supabase.from('items').select('*')
     if (error) throw error
     return data
@@ -77,7 +79,8 @@ const getItems = createServerFn({ method: 'GET' })
 
 - Input validation: `.inputValidator(schema)` — NEVER `.validator()`.
 - Errors: `throw new Error(message)` — caught by global `MutationCache` → toast.
-- **Do NOT check auth inside server functions** — auth gating is handled at the route level via `beforeLoad` on `_authed.tsx`. No redundant auth checks.
+- Route guards improve UX, not security. Sensitive server functions must enforce authorization through Supabase RLS, scoped queries, or explicit server-side session/role checks.
+- Do not duplicate auth checks only when a shared server helper already proves the same invariant and RLS still protects the table.
 - Always use `getSupabaseServerClient()` — never `createClient()` or the browser client.
 
 ## Error Handling

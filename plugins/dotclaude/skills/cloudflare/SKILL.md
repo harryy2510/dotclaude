@@ -24,6 +24,7 @@ description: Workers best practices, Wrangler CLI quick reference, and wrangler.
 - **wrangler types** — generate `Env` from config; never hand-write binding interfaces
 - **Secrets** — `wrangler secret put`; never hardcode in config or source
 - **wrangler.jsonc** — use JSONC config; newer features are JSON-only
+- **Workers Static Assets** — use Workers, not Pages, for new static/full-stack deployments unless the repo already chose Pages
 
 ### Request & Response
 - **Streaming** — stream large/unknown payloads; never `await response.text()` on unbounded data
@@ -107,7 +108,7 @@ wrangler dev --port 8787        # Custom port
 wrangler dev --test-scheduled   # Test cron handlers (visit /__scheduled)
 ```
 
-Local secrets go in `.dev.vars`:
+Local secrets go in `.dev.vars`. Do not write secrets yourself; tell the user what to create or update:
 ```
 API_KEY=local-dev-key
 ```
@@ -121,7 +122,7 @@ API_KEY=local-dev-key
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "my-worker",
   "main": "src/index.ts",
-  "compatibility_date": "2026-01-01",
+  "compatibility_date": "<today>",
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true, "head_sampling_rate": 1 }
 }

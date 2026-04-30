@@ -8,20 +8,9 @@ Prefer retrieval over pre-training. Types, config schemas, and APIs change with 
 
 ### Workers types
 
-Fetch the latest `@cloudflare/workers-types` before reviewing. The project may have an older version installed.
+Prefer `bunx wrangler types` to generate the typed `Env` interface from local `wrangler.jsonc`.
 
-```bash
-mkdir -p /tmp/workers-types-latest && \
-  npm pack @cloudflare/workers-types --pack-destination /tmp/workers-types-latest && \
-  tar -xzf /tmp/workers-types-latest/cloudflare-workers-types-*.tgz -C /tmp/workers-types-latest
-# Types are at /tmp/workers-types-latest/package/index.d.ts
-```
-
-Search this file for the specific type, class, or interface under review. Do not guess type names.
-
-Alternative: `npx wrangler types` generates a typed `Env` interface from the local wrangler config.
-
-Fallback: read `node_modules/@cloudflare/workers-types/index.d.ts`. Note the installed version.
+For API/class signatures, read `node_modules/@cloudflare/workers-types/index.d.ts` when installed, and verify against Cloudflare docs when the local package may be stale. Do not guess type names.
 
 ### Wrangler config schema
 

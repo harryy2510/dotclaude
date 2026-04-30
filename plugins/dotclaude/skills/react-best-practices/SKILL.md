@@ -7,6 +7,13 @@ description: "React performance optimization and composition patterns. Use when 
 
 57 performance rules + composition patterns for React applications.
 
+## Current React Assumptions
+
+- Prefer official React docs over memory for new APIs.
+- React Compiler can apply memo-equivalent optimizations; do not add `memo`, `useMemo`, or `useCallback` by habit.
+- Use manual memoization only for measured bottlenecks, referential stability required by an API, or expensive calculations.
+- Keep effects for synchronization with external systems. Derive render state during render and move interaction logic into event handlers.
+
 ## Performance Rules by Priority
 
 ### 1. Eliminating Waterfalls (CRITICAL)

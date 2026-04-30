@@ -16,6 +16,7 @@ Use this skill before changing scripts, package metadata, linting, formatting, t
 - Use `oxlint --type-aware --type-check` for linting and type checking.
 - Use `oxfmt` for formatting.
 - Use Husky for git hooks. Do not introduce `.githooks` or ad hoc hook folders.
+- GitHub Actions workflows must use Node.js 24 with `actions/setup-node@v6` when a Node runtime is needed.
 - Do not add ESLint, Prettier, `tsc --noEmit`, npm, yarn, pnpm, or npx workflows.
 
 ## Package Scripts
@@ -59,6 +60,7 @@ For Rust plus Bun repos:
 - Examples: `feat: add repo intelligence`, `fix(cli): preserve user files`, `chore!: remove old setup`.
 - Do not skip hooks.
 - Use Husky repo-local hooks that call `bunx @harryy/agent-toolkit`.
+- For isolated worktrees, create from the latest target branch, run setup/check baseline before editing, and clean up only after the user accepts merge/PR/discard.
 
 ## Verification
 

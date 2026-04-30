@@ -11,7 +11,10 @@ These rules apply to Claude Code sessions unless a more specific repository inst
 
 ## Mandatory Startup
 
-- Before substantial work, activate the relevant role profile from `agents/` when available. If a native subagent is not needed, use the role profile as the current-agent operating mode.
+- Before substantial work, run the `agent-routing` flow: identify the work type, pick the matching role profile from `agents/`, and state a one-line routing receipt.
+- If the host supports native subagents and current policy/user permissions allow delegation, invoke the matching specialist for self-contained work. If native subagents are unavailable or disallowed, read the role profile and use it as the current-agent operating mode.
+- Do not spawn `agents-orchestrator` as a child subagent when it needs to call other agents; keep orchestration in the main thread and invoke specialists directly.
+- Treat the `skills:` list in an agent profile as required context for that role.
 - Before writing code, read every relevant skill. Do not rely on memory for skill contents.
 - Always read `toolchain` for setup, scripts, linting, formatting, type checking, or new package work.
 - Always read `repo-intelligence` before broad codebase exploration, refactors, reviews, or completion checks.
@@ -41,6 +44,7 @@ These rules apply to Claude Code sessions unless a more specific repository inst
 - Use `oxlint` instead of ESLint.
 - Use `oxfmt` instead of Prettier.
 - Use Husky for git hooks. Do not introduce `.githooks` or ad hoc hook folders.
+- GitHub Actions workflows must use Node.js 24 with `actions/setup-node@v6` when a Node runtime is needed.
 - Do not add npm, yarn, pnpm, npx, ESLint, Prettier, or `tsc --noEmit` workflows.
 
 ### Package Scripts
@@ -66,6 +70,7 @@ These rules apply to Claude Code sessions unless a more specific repository inst
 - New project or tooling setup: `toolchain`, `project-setup`, `scaffold`
 - Codebase exploration or reviews: `repo-intelligence`, `repo-map`, `deslop`
 - Agent delegation or role selection: `agent-routing`
+- Debugging, regressions, flaky tests, incidents: `debugging`, `testing`
 - React UI: `ui`, `shadcn`, `react-best-practices`
 - Forms: `forms-rhf-zod`
 - Data fetching: `react-query-mutative`
@@ -80,6 +85,7 @@ These rules apply to Claude Code sessions unless a more specific repository inst
 
 - Before claiming work is complete, run the repo's relevant check command when practical.
 - Prefer `bun run check` when the repo defines it.
+- Run `/skill-lint` or `plugins/dotclaude/scripts/skill-lint.sh` when agent, skill, command, or plugin instruction files change.
 - Run `bunx @harryy/agent-toolkit repo check` in agentized repos once the toolkit is available.
 - Run `agents sync --check` when `AGENTS.md` or `.agents/` changed.
 - If checks are not run, state why.

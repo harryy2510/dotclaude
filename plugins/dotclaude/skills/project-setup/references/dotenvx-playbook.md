@@ -2,6 +2,8 @@
 
 Full reference for dotenvx encryption, env sync, CI integration, and local Supabase overrides.
 
+Env files are user-owned. Agents may add scripts and workflow code from this playbook, but must not run commands that create, edit, encrypt, decrypt, stage, or commit `.env*` files unless the user explicitly asks in the current task.
+
 ## Install
 
 ```bash
@@ -15,7 +17,7 @@ dotenvx encrypt -f .env.development --stdout > .env.development.encrypted
 dotenvx encrypt -f .env.production --stdout > .env.production.encrypted
 ```
 
-Creates `.env.keys` with private decryption keys. **Never commit `.env.keys`.**
+These commands are for the user to run. They create `.env.keys` with private decryption keys. **Never commit `.env.keys`.**
 
 ## .gitignore
 
@@ -47,7 +49,7 @@ Key details:
 
 ## Pre-commit Hook
 
-Add this env encryption step to the repo-local Agent Toolkit pre-commit flow when the project uses encrypted env files:
+If the user explicitly wants hooks to rewrite encrypted env artifacts, add this env encryption step to the repo-local Agent Toolkit pre-commit flow:
 
 ```bash
 if [ -f .env.development ] && [ -f .env.production ]; then
@@ -157,3 +159,5 @@ After CI deploy works:
 | `.env.development.local` | Local Supabase overrides (env:local) | No |
 | `scripts/sync-env.ts` | Push secrets to CF + Supabase | Yes |
 | `scripts/generate-env-local.ts` | Generate local Supabase env | Yes |
+
+Even when encrypted env files are intended to be committed, agents should not create or update them without an explicit user request.

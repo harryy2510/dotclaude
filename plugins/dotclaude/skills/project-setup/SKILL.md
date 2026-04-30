@@ -7,6 +7,8 @@ description: "Use when setting up DX tooling (linting, formatting, git hooks, ty
 
 Covers three domains: DX tooling (lint/format/hooks), encrypted environment management (dotenvx), and GitHub Actions CI/CD.
 
+Env files are user-owned. Agents may add tooling, scripts, docs, and CI workflow code for env management, but must not create, edit, encrypt, decrypt, stage, or commit any `.env*` file. Give the user exact commands to run when env file contents need to change.
+
 ---
 
 ## 1. DX Tooling
@@ -105,9 +107,9 @@ dist/
 ### Quick Setup
 
 1. `bun add @dotenvx/dotenvx`
-2. Encrypt: `dotenvx encrypt -f .env.development --stdout > .env.development.encrypted` (same for production)
+2. Ask the user to encrypt env files themselves: `dotenvx encrypt -f .env.development --stdout > .env.development.encrypted` (same for production)
 3. Add `postinstall`, `env:encrypt`, `env:local`, `sync-env` scripts to `package.json`
-4. Add an Agent Toolkit pre-commit hook step to auto-encrypt env files
+4. Do not add auto-encryption hooks unless the user explicitly asks; hooks that write `.env*` files are user-owned behavior
 5. Create `scripts/generate-env-local.ts` for local Supabase overrides
 6. Create `scripts/sync-env.ts` to push secrets to Cloudflare + Supabase
 

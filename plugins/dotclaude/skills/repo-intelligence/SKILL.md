@@ -14,6 +14,8 @@ bunx @harryy/agent-toolkit repo intel
 bunx @harryy/agent-toolkit repo check
 ```
 
+If the package is not published or available in the current environment, use the repo-local Agent Toolkit binary or set `AGENT_TOOLKIT_BIN=/path/to/agent-toolkit` and run `scripts/agent-check`.
+
 `repo intel` creates local ignored context:
 
 ```text

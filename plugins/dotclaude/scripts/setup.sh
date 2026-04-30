@@ -17,8 +17,10 @@ PLUGIN_CODEX="$PLUGIN_DIR/AGENTS.md"
 
 CLAUDE_START="<!-- DOTCLAUDE:START -->"
 CLAUDE_END="<!-- DOTCLAUDE:END -->"
-CODEX_START="<!-- DOTCLAUDE-CODEX:START -->"
-CODEX_END="<!-- DOTCLAUDE-CODEX:END -->"
+CODEX_START="<!-- DOTCLAUDE-AGENTS:START -->"
+CODEX_END="<!-- DOTCLAUDE-AGENTS:END -->"
+LEGACY_CODEX_START="<!-- DOTCLAUDE-CODEX:START -->"
+LEGACY_CODEX_END="<!-- DOTCLAUDE-CODEX:END -->"
 
 sync_managed_file() {
 	local source_file="$1"
@@ -26,6 +28,8 @@ sync_managed_file() {
 	local start_mark="$3"
 	local end_mark="$4"
 	local label="$5"
+	local legacy_start="${6:-}"
+	local legacy_end="${7:-}"
 
 	if [ ! -f "$source_file" ]; then
 		echo "[ERROR] $label source not found at $source_file" >&2
@@ -53,6 +57,18 @@ sync_managed_file() {
 
 	if grep -qF "$start_mark" "$target_file" && grep -qF "$end_mark" "$target_file"; then
 		awk -v start="$start_mark" -v end="$end_mark" -v src="$source_file" '
+			BEGIN { skip = 0 }
+			index($0, start) == 1 {
+				while ((getline line < src) > 0) print line
+				close(src)
+				skip = 1
+				next
+			}
+			skip && index($0, end) == 1 { skip = 0; next }
+			!skip { print }
+		' "$target_file" > "$tmp"
+	elif [ -n "$legacy_start" ] && [ -n "$legacy_end" ] && grep -qF "$legacy_start" "$target_file" && grep -qF "$legacy_end" "$target_file"; then
+		awk -v start="$legacy_start" -v end="$legacy_end" -v src="$source_file" '
 			BEGIN { skip = 0 }
 			index($0, start) == 1 {
 				while ((getline line < src) > 0) print line
@@ -94,12 +110,14 @@ sync_managed_file() {
 echo "Setting up DotClaude..."
 
 sync_managed_file "$PLUGIN_CLAUDE" "$CLAUDE_MD" "$CLAUDE_START" "$CLAUDE_END" "Claude"
-sync_managed_file "$PLUGIN_CODEX" "$CODEX_AGENTS" "$CODEX_START" "$CODEX_END" "Codex"
+sync_managed_file "$PLUGIN_CODEX" "$CODEX_AGENTS" "$CODEX_START" "$CODEX_END" "Codex" "$LEGACY_CODEX_START" "$LEGACY_CODEX_END"
 
-if [ ! -x "$HOME/.agent-sh/bin/agent-analyzer" ]; then
+if [ "${DOTCLAUDE_INSTALL_REPO_MAP:-}" = "1" ] && [ ! -x "$HOME/.agent-sh/bin/agent-analyzer" ]; then
 	bash "$SCRIPT_DIR/install-repo-map.sh"
-else
+elif [ "${DOTCLAUDE_INSTALL_REPO_MAP:-}" = "1" ]; then
 	echo "[OK] agent-analyzer already installed"
+else
+	echo "[OK] Skipped agent-analyzer install. Set DOTCLAUDE_INSTALL_REPO_MAP=1 to install the legacy repo-map binary."
 fi
 
 echo "[OK] DotClaude setup complete"

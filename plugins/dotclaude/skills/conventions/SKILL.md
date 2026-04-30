@@ -54,7 +54,6 @@ Run:
 
 ```bash
 bunx @harryy/agent-toolkit repo check
-agents sync --check
 ```
 
-Run `agents sync --check` only when `AGENTS.md` or `.agents/` changed.
+Run `agents sync --path . --check` only as an explicit local maintenance check when `AGENTS.md` or `.agents/` changed. It can report generated local or user-level integration drift and is not the default CI gate.

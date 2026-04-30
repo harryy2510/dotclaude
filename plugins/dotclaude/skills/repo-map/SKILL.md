@@ -9,13 +9,15 @@ Generates a full repository intelligence map using the `agent-analyzer` Rust bin
 
 ## First-Time Setup
 
-Run the install script (downloads ~5MB binary):
+Run the install script with an explicit pinned version:
 
 ```bash
-bash scripts/install-repo-map.sh
+AGENT_ANALYZER_VERSION=<version> bash scripts/install-repo-map.sh
 ```
 
 This downloads `agent-analyzer` from [agent-sh/agent-analyzer](https://github.com/agent-sh/agent-analyzer) to `~/.agent-sh/bin/`.
+
+Set `AGENT_ANALYZER_SHA256=<sha256>` when you have the release checksum.
 
 ## Usage
 
@@ -24,7 +26,7 @@ This downloads `agent-analyzer` from [agent-sh/agent-analyzer](https://github.co
 ~/.agent-sh/bin/agent-analyzer repo-intel init . --max-commits 200
 ```
 
-Creates `.claude/repo-intel.json` with full symbol index, import graph, and git history analysis.
+Creates `.agents/intel/repo-map/repo-intel.json` with full symbol index, import graph, and git history analysis.
 
 ### Update existing map (incremental)
 ```bash
@@ -33,7 +35,7 @@ Creates `.claude/repo-intel.json` with full symbol index, import graph, and git 
 
 ### Query symbols for a specific file
 ```bash
-~/.agent-sh/bin/agent-analyzer repo-map symbols --map-file .claude/repo-intel.json src/api/auth/hooks.ts
+~/.agent-sh/bin/agent-analyzer repo-map symbols --map-file .agents/intel/repo-map/repo-intel.json src/api/auth/hooks.ts
 ```
 
 ### Other commands
@@ -66,4 +68,4 @@ Add to project's `package.json` scripts:
 }
 ```
 
-Add `.claude/repo-intel.json` to `.gitignore` — it's a local cache.
+Generated repo-map files live under `.agents/intel/repo-map/`, which Agent Toolkit ignores as a local cache.

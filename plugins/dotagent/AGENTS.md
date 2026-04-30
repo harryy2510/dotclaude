@@ -1,4 +1,4 @@
-<!-- DOTAGENT-AGENTS:START -->
+<!-- DOTAGENT:START -->
 # Global Agent Guidelines
 
 These rules apply to every agent session and every project unless a more specific repository instruction overrides them.
@@ -69,7 +69,7 @@ These rules apply to every agent session and every project unless a more specifi
 ## Common Skill Routing
 
 - New project or tooling setup: `toolchain`, `project-setup`, `scaffold`
-- Codebase exploration or reviews: `repo-intelligence`, `repo-map`, `deslop`
+- Codebase exploration or reviews: `repo-intelligence`, `deslop`
 - Agent delegation or role selection: `agent-routing`
 - Debugging, regressions, flaky tests, incidents: `debugging`, `testing`
 - React UI: `ui`, `shadcn`, `react-best-practices`
@@ -90,4 +90,4 @@ These rules apply to every agent session and every project unless a more specifi
 - Run `bunx @harryy/agent-toolkit repo check` in agentized repos once the toolkit is available.
 - Run `agents sync --check` when `AGENTS.md` or `.agents/` changed.
 - If checks are not run, state why.
-<!-- DOTAGENT-AGENTS:END -->
+<!-- DOTAGENT:END -->

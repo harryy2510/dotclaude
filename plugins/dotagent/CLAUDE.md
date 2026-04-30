@@ -68,7 +68,7 @@ These rules apply to Claude Code sessions unless a more specific repository inst
 ## Common Skill Routing
 
 - New project or tooling setup: `toolchain`, `project-setup`, `scaffold`
-- Codebase exploration or reviews: `repo-intelligence`, `repo-map`, `deslop`
+- Codebase exploration or reviews: `repo-intelligence`, `deslop`
 - Agent delegation or role selection: `agent-routing`
 - Debugging, regressions, flaky tests, incidents: `debugging`, `testing`
 - React UI: `ui`, `shadcn`, `react-best-practices`

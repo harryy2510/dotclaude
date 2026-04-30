@@ -1,5 +1,5 @@
 ---
-description: One-time setup after installing DotAgent. Copies conventions to ~/.claude/CLAUDE.md and ~/.codex/AGENTS.md, then installs agent-analyzer.
+description: One-time setup after installing DotAgent. Copies conventions to ~/.claude/CLAUDE.md and ~/.codex/AGENTS.md.
 ---
 
 Run the setup script:

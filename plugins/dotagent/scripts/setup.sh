@@ -15,10 +15,8 @@ CODEX_AGENTS="$HOME/.codex/AGENTS.md"
 PLUGIN_CLAUDE="$PLUGIN_DIR/CLAUDE.md"
 PLUGIN_CODEX="$PLUGIN_DIR/AGENTS.md"
 
-CLAUDE_START="<!-- DOTAGENT:START -->"
-CLAUDE_END="<!-- DOTAGENT:END -->"
-CODEX_START="<!-- DOTAGENT-AGENTS:START -->"
-CODEX_END="<!-- DOTAGENT-AGENTS:END -->"
+MANAGED_START="<!-- DOTAGENT:START -->"
+MANAGED_END="<!-- DOTAGENT:END -->"
 
 sync_managed_file() {
 	local source_file="$1"
@@ -93,13 +91,7 @@ sync_managed_file() {
 
 echo "Setting up DotAgent..."
 
-sync_managed_file "$PLUGIN_CLAUDE" "$CLAUDE_MD" "$CLAUDE_START" "$CLAUDE_END" "Claude"
-sync_managed_file "$PLUGIN_CODEX" "$CODEX_AGENTS" "$CODEX_START" "$CODEX_END" "Codex"
-
-if [ ! -x "$HOME/.agent-sh/bin/agent-analyzer" ]; then
-	bash "$SCRIPT_DIR/install-repo-map.sh"
-else
-	echo "[OK] agent-analyzer already installed"
-fi
+sync_managed_file "$PLUGIN_CLAUDE" "$CLAUDE_MD" "$MANAGED_START" "$MANAGED_END" "Claude"
+sync_managed_file "$PLUGIN_CODEX" "$CODEX_AGENTS" "$MANAGED_START" "$MANAGED_END" "Codex"
 
 echo "[OK] DotAgent setup complete"

@@ -4,7 +4,7 @@
     <strong>Your agent setup: skills, agents, commands, tooling, and shared rules in one plugin.</strong>
   </p>
   <p align="center">
-    <code>21 skills</code> · <code>20 agents</code> · <code>6 commands</code> · <code>zero bloat</code>
+    <code>20 skills</code> · <code>20 agents</code> · <code>5 commands</code> · <code>zero bloat</code>
   </p>
 </p>
 
@@ -46,16 +46,16 @@
 
 ## 🧠 Skills
 
-Loaded on-demand. Only the relevant skill enters context — the rest cost 0 tokens.
+Loaded on-demand. Only the relevant skill enters context: the rest cost 0 tokens.
 
 | | Skill | What it teaches |
 |---|---|---|
-| 🏗️ | `scaffold` | Full project scaffolding — TanStack Start + Supabase + Cloudflare |
+| 🏗️ | `scaffold` | Full project scaffolding: TanStack Start + Supabase + Cloudflare |
 | 🔧 | `toolchain` | Bun, TypeScript, oxlint, oxfmt, hooks, Conventional Commits |
-| 🧭 | `repo-intelligence` | Unified CodeSight, repo-map, deslop context and checks |
+| 🧭 | `repo-intelligence` | Unified CodeSight and Agent Toolkit context/checks |
 | 🤖 | `agent-routing` | Role activation, skill routing, native subagent fallback |
 | 🔧 | `project-setup` | DX tooling, dotenvx encrypted env, CI/CD |
-| ✅ | `conventions` | One-time convention setup — enforces style via tooling forever |
+| ✅ | `conventions` | One-time convention setup: enforces style via tooling forever |
 | 🎨 | `ui` | Tailwind v4, shadcn/base-ui, CVA variants, dark mode, animations |
 | 🧩 | `shadcn` | Adding, searching, fixing, composing shadcn/ui components |
 | 📝 | `forms-rhf-zod` | react-hook-form + zod v4, create/edit modes, useWatch patterns |
@@ -67,8 +67,7 @@ Loaded on-demand. Only the relevant skill enters context — the rest cost 0 tok
 | ⚡ | `vite` | Vite config, plugin API, SSR, Rolldown migration |
 | 🚀 | `react-best-practices` | 57 performance rules + composition patterns |
 | 🗄️ | `supabase-postgres-best-practices` | Indexing, query plans, RLS perf, connection pooling |
-| 🗺️ | `repo-map` | Legacy fallback symbol index when toolkit repo intelligence is insufficient |
-| 🧹 | `deslop` | Legacy fallback slop scanner when toolkit checks are unavailable |
+| 🧹 | `deslop` | Slop scanner for debug leftovers, placeholders, and risky code |
 | 🧪 | `testing` | Vitest + Testing Library + Playwright, file conventions, what to test |
 | 🐞 | `debugging` | Root-cause workflow for bugs, regressions, flakes, incidents, and fix verification |
 
@@ -108,8 +107,7 @@ Type these directly in Claude Code:
 
 | Command | What happens |
 |---|---|
-| `/repo-map` | 🗺️ Legacy fallback: runs agent-analyzer → builds symbol index |
-| `/deslop` | 🧹 Legacy fallback: scans codebase for slop |
+| `/deslop` | 🧹 Scans codebase for slop |
 | `/skill-lint` | ✅ Validates skills + agents → checks frontmatter, size, refs, triggers |
 | `/dotagent:setup` | 🔧 One-time: installs managed global rules for Claude and Codex |
 | `/dotagent:update` | 🔄 Updates plugin + refreshes Claude and Codex conventions |
@@ -145,7 +143,7 @@ Run Agent Toolkit once per project. Done forever.
   │  Type-aware checks without tsc              │
   ├─────────────────────────────────────────────┤
   │  Layer 3: Pre-commit hooks                  │
-  │  Hard gate — wrong code NEVER gets          │
+  │  Hard gate: wrong code NEVER gets          │
   │  committed                                  │
   └─────────────────────────────────────────────┘
 ```
@@ -180,7 +178,7 @@ The `agents-orchestrator` enforces an 8-phase workflow:
   ├──────────────┤
   │ 7. Validate  │ ──→  Run check command (deterministic)
   ├──────────────┤
-  │ 8. Ship      │ ──→  Commit/PR — only if you say so
+  │ 8. Ship      │ ──→  Commit/PR: only if you say so
   └──────────────┘
 ```
 
@@ -204,7 +202,7 @@ dotagent/
 │   ├── testing-*.md
 │   ├── product-manager.md
 │   └── design-ux-architect.md
-├── skills/                  ← 21 on-demand skills
+├── skills/                  ← 20 on-demand skills
 │   ├── conventions/
 │   ├── scaffold/
 │   ├── ui/
@@ -213,7 +211,6 @@ dotagent/
 │       ├── SKILL.md
 │       └── references/
 ├── commands/                ← Slash commands
-│   ├── repo-map.md
 │   ├── deslop.md
 │   ├── skill-lint.md
 │   ├── setup.md
@@ -221,7 +218,8 @@ dotagent/
 │   └── uninstall.md
 └── scripts/                 ← Pure bash tooling (0 tokens)
     ├── deslop.sh
-    ├── install-repo-map.sh
+    ├── setup.sh
+    ├── teardown.sh
     └── skill-lint.sh
 ```
 

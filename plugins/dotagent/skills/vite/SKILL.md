@@ -69,4 +69,3 @@ export default defineConfig({
 - `@vitejs/plugin-vue-jsx` - Vue 3 JSX
 - `@vitejs/plugin-react` - React with Oxc/Babel
 - `@vitejs/plugin-react-swc` - React with SWC
-- `@vitejs/plugin-legacy` - Legacy browser support

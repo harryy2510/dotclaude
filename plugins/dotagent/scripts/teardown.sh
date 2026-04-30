@@ -7,10 +7,8 @@ set -euo pipefail
 CLAUDE_MD="$HOME/.claude/CLAUDE.md"
 CODEX_AGENTS="$HOME/.codex/AGENTS.md"
 
-CLAUDE_START="<!-- DOTAGENT:START -->"
-CLAUDE_END="<!-- DOTAGENT:END -->"
-CODEX_START="<!-- DOTAGENT-AGENTS:START -->"
-CODEX_END="<!-- DOTAGENT-AGENTS:END -->"
+MANAGED_START="<!-- DOTAGENT:START -->"
+MANAGED_END="<!-- DOTAGENT:END -->"
 
 remove_managed_block() {
 	local target_file="$1"
@@ -44,7 +42,7 @@ remove_managed_block() {
 
 echo "Removing DotAgent conventions..."
 
-remove_managed_block "$CLAUDE_MD" "$CLAUDE_START" "$CLAUDE_END" "Claude"
-remove_managed_block "$CODEX_AGENTS" "$CODEX_START" "$CODEX_END" "Codex"
+remove_managed_block "$CLAUDE_MD" "$MANAGED_START" "$MANAGED_END" "Claude"
+remove_managed_block "$CODEX_AGENTS" "$MANAGED_START" "$MANAGED_END" "Codex"
 
 echo "[OK] DotAgent conventions removed"

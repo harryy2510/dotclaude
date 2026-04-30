@@ -32,7 +32,7 @@ Agents should read `.agents/intel/summary.md` before broad source exploration.
    - Read `.codesight/CODESIGHT.md`.
    - Open focused `.codesight/*` files only when needed.
 2. If `.codesight/` does not exist, use generated `.agents/intel/summary.md`.
-3. If deeper symbol data is needed and the toolkit summary is insufficient, use the `repo-map` skill as a fallback.
+3. If deeper symbol data is needed, use focused source search and local code-reading tools after reading the summary.
 
 ## Quality Gate
 
@@ -44,4 +44,4 @@ Agents should read `.agents/intel/summary.md` before broad source exploration.
 - Generated agent output drift when supported.
 - Conventional commit hook support when bootstrapped.
 
-Do not manually juggle CodeSight, repo-map, and deslop as separate default steps. Use the toolkit first, then fall back only when needed.
+Do not manually juggle separate context tools as default setup. Use the toolkit first, then inspect focused source files as needed.

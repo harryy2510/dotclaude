@@ -69,7 +69,7 @@ Flag `env.X` inside a class extending a platform base class. Flag `this.env.X` i
 
 Old patterns survive in codebases long after APIs change.
 
-- **`extends` vs `implements`**: platform classes use `extends`, not `implements`. The `implements` pattern is legacy and loses `this.ctx`, `this.env`.
+- **`extends` vs `implements`**: platform classes use `extends`, not `implements`. The `implements` pattern is outdated and loses `this.ctx`, `this.env`.
 - **Import paths**: verify module specifiers match what types actually export. Common mistake: wrong path for `"cloudflare:workers"` vs `"cloudflare:workflows"`.
 - **Renamed properties**: e.g., `this.state` to `this.ctx` in Durable Objects. Search types to confirm.
 - **Constructor signatures**: base class constructors change. Verify expected parameters.
@@ -86,7 +86,7 @@ For executable examples, verify: `name`, `compatibility_date`, `main`. Check the
 
 - **JSONC** (`wrangler.jsonc`) — preferred for new projects
 - **JSON** (`wrangler.json`) — valid but no comments
-- **TOML** (`wrangler.toml`) — legacy; acceptable in existing content, flag in new projects
+- **TOML** (`wrangler.toml`) — older format; acceptable in existing content, flag in new projects
 
 ### Binding-code consistency
 
@@ -115,7 +115,7 @@ See the full anti-patterns table in `SKILL.md`. The type-specific ones to watch 
 - **`any` on `Env` or handler params** — defeats type safety for all downstream binding access
 - **`as unknown as T`** — hides real type incompatibilities; fix the underlying design
 - **`@ts-ignore`/`@ts-expect-error` without explanation** — masks errors silently; require a justifying comment
-- **`implements` instead of `extends` on platform base classes** — legacy pattern; loses `this.ctx`, `this.env`
+- **`implements` instead of `extends` on platform base classes** — outdated pattern; loses `this.ctx`, `this.env`
 - **`env.X` inside class body** — should be `this.env.X` in platform base classes
 - **`this.env.X` in module export handler** — should be `env.X` parameter
 - **Non-serializable values across boundaries** — `Response`, `Error` in step/queue compiles but fails at runtime

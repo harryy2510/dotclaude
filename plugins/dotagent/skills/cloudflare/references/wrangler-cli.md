@@ -24,7 +24,7 @@ bunx create-cloudflare@latest my-app   # Framework starter
 wrangler dev                    # Local mode (default) — local storage simulation
 wrangler dev --env staging      # Specific environment
 wrangler dev --local            # Force local-only (disable remote bindings)
-wrangler dev --remote           # Run on Cloudflare edge (legacy)
+wrangler dev --remote           # Run on Cloudflare edge for existing remote-binding workflows
 wrangler dev --port 8787        # Custom port
 wrangler dev --live-reload      # Live reload for HTML changes
 wrangler dev --test-scheduled   # Test cron handlers (visit /__scheduled)
@@ -429,7 +429,7 @@ wrangler secrets-store secret delete <STORE_ID> my-secret
 }
 ```
 
-## Pages (Legacy / Existing Pages Projects Only)
+## Pages (Existing Pages Projects Only)
 
 Prefer Workers Static Assets for new DotAgent projects. Use Pages commands only when the repo already uses Cloudflare Pages or the user explicitly asks for Pages.
 

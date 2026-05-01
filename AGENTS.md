@@ -15,7 +15,7 @@ This repository contains the DotAgent plugin and the shared agent rules it insta
 
 ## Repo Intelligence
 
-- Before broad exploration, read `.agents/intel/index.md` if it exists.
+- Before broad exploration, read `.agents/intel/summary.md` if it exists.
 - `.agents/intel/` is generated local repo intelligence, not a role-profile directory.
 
 ## Plugin Layout
@@ -46,3 +46,11 @@ This repository contains the DotAgent plugin and the shared agent rules it insta
 - Do not run destructive cleanup commands or `git push` unless the user explicitly asks in the current message.
 - Run `plugins/dotagent/scripts/skill-lint.sh` when agent, skill, command, or plugin instruction files change.
 - Validate JSON manifests after editing them.
+
+<!-- AGENT-TOOLKIT:REPO-INTEL:START -->
+## Agent Toolkit Repo Intelligence
+
+- Before broad exploration, read `.agents/intel/summary.md` if it exists.
+- Use the task-specific intel files it links to (`overview.md`, `tasks.md`, `graph.md`, `database.md`, and similar) to find the relevant source files before editing.
+- `.agents/intel/` is generated and local; do not commit it.
+<!-- AGENT-TOOLKIT:REPO-INTEL:END -->

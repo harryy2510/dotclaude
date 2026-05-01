@@ -27,12 +27,9 @@ Agents should read `.agents/intel/summary.md` before broad source exploration.
 
 ## Context Order
 
-1. If `.codesight/` exists, prefer it:
-   - Read `.codesight/wiki/index.md`.
-   - Read `.codesight/CODESIGHT.md`.
-   - Open focused `.codesight/*` files only when needed.
-2. If `.codesight/` does not exist, use generated `.agents/intel/summary.md`.
-3. If deeper symbol data is needed, use focused source search and local code-reading tools after reading the summary.
+1. If `.agents/intel/summary.md` exists, read it first.
+2. If `.agents/intel/repo.json` exists and structured details are useful, inspect the relevant sections.
+3. If deeper symbol data is needed, use focused source search and local code-reading tools after reading the generated context.
 
 ## Quality Gate
 

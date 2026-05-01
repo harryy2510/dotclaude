@@ -52,7 +52,7 @@ Loaded on-demand. Only the relevant skill enters context: the rest cost 0 tokens
 |---|---|---|
 | 🏗️ | `scaffold` | Full project scaffolding: TanStack Start + Supabase + Cloudflare |
 | 🔧 | `toolchain` | Bun, TypeScript, oxlint, oxfmt, hooks, Conventional Commits |
-| 🧭 | `repo-intelligence` | Unified CodeSight and Agent Toolkit context/checks |
+| 🧭 | `repo-intelligence` | Agent Toolkit repo context and enforcement checks |
 | 🤖 | `agent-routing` | Available role, skill, and native subagent routing |
 | 🔧 | `project-setup` | DX tooling, dotenvx encrypted env, CI/CD |
 | ✅ | `conventions` | One-time convention setup: enforces style via tooling forever |

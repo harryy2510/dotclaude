@@ -53,7 +53,7 @@ Loaded on-demand. Only the relevant skill enters context: the rest cost 0 tokens
 | 🏗️ | `scaffold` | Full project scaffolding: TanStack Start + Supabase + Cloudflare |
 | 🔧 | `toolchain` | Bun, TypeScript, oxlint, oxfmt, hooks, Conventional Commits |
 | 🧭 | `repo-intelligence` | Unified CodeSight and Agent Toolkit context/checks |
-| 🤖 | `agent-routing` | Role activation, skill routing, native subagent fallback |
+| 🤖 | `agent-routing` | Available role, skill, and native subagent routing |
 | 🔧 | `project-setup` | DX tooling, dotenvx encrypted env, CI/CD |
 | ✅ | `conventions` | One-time convention setup: enforces style via tooling forever |
 | 🎨 | `ui` | Tailwind v4, shadcn/base-ui, CVA variants, dark mode, animations |
@@ -75,7 +75,7 @@ Loaded on-demand. Only the relevant skill enters context: the rest cost 0 tokens
 
 ## 🤖 Agents
 
-**20 specialists. Kebab-case native names, proactive triggers, least-privilege tools, and required skill preloads.**
+**20 specialists. Kebab-case native names, proactive triggers, least-privilege tools, and skill hints when the host exposes DotAgent role profiles.**
 
 ```
 ╔══════════════════════════════════════════════════════════════════════╗
@@ -88,7 +88,7 @@ Loaded on-demand. Only the relevant skill enters context: the rest cost 0 tokens
 ║  Database Optimizer      E2E Test Runner    🎛️ ORCHESTRATION         ║
 ║  DevOps Automator                           ────────────────         ║
 ║  Security Engineer                          Agents Orchestrator      ║
-║  Debugger                                   (8-phase workflow)       ║
+║  Debugger                                   (speed-biased routing)   ║
 ║  Rapid Prototyper                                                    ║
 ║  Software Architect                                                  ║
 ║  Code Reviewer                                                       ║
@@ -160,25 +160,19 @@ bunx @harryy/agent-toolkit repo check
 
 The `agent-routing` skill maps work types to specialists when the current host exposes DotAgent skills or the role profile files are accessible. It is skipped for normal speed-mode edits unless the user asks for role routing or the task is broad enough for subagents. When the host supports native subagents and policy allows it, a matching specialist can be invoked for self-contained work; otherwise the role profile is lightweight local guidance. Multi-agent orchestration stays in the main thread so specialists can actually be called directly.
 
-The `agents-orchestrator` enforces an 8-phase workflow:
+The `agents-orchestrator` is for broad, multi-role work. It keeps coordination in the main thread, creates a short execution plan, starts the first concrete step immediately, and uses native subagents only for independent slices when the current host exposes them.
 
 ```
   ┌──────────────┐
-  │ 1. Discovery │ ──→  Read spec/issue, understand scope
+  │ 1. Context   │ ──→  Read only enough to scope the work
   ├──────────────┤
-  │ 2. Explore   │ ──→  Read code, check existing patterns
+  │ 2. Plan      │ ──→  Short execution plan for broad/risky work
   ├──────────────┤
-  │ 3. Plan      │ ──→  Propose approach, identify changes
+  │ 3. Execute   │ ──→  Start directly; split independent slices if useful
   ├──────────────┤
-  │ 4. APPROVE   │ ──→  Gate broad/risky work or plan-mode tasks
+  │ 4. Check     │ ──→  Focused checks; full checks for PR/commit/release
   ├──────────────┤
-  │ 5. Implement │ ──→  Invoke specialists, write code
-  ├──────────────┤
-  │ 6. Review    │ ──→  Code reviewer agent, fix findings
-  ├──────────────┤
-  │ 7. Validate  │ ──→  Run check command (deterministic)
-  ├──────────────┤
-  │ 8. Ship      │ ──→  Commit/PR: only if you say so
+  │ 5. Ship      │ ──→  Commit/PR only if you say so
   └──────────────┘
 ```
 
@@ -196,7 +190,8 @@ dotagent/
 │   ├── gemini-extension.json
 │   ├── AGENTS.md            ← symlink to ../AGENTS.md
 │   └── skills               ← symlink to ../skills
-├── agents/                  ← 20 specialist agents
+├── agents/                  ← 20 specialist role profiles + Codex metadata
+│   ├── openai.yaml          ← Codex plugin interface metadata, not a role
 │   ├── agents-orchestrator.md
 │   ├── engineering-*.md
 │   ├── testing-*.md
@@ -229,6 +224,8 @@ dotagent/
 
 Claude Code uses its native plugin system. Codex and other agents can consume the shared instructions through `AGENTS.md`, `.agents/agents.json`, and the Codex plugin manifest. `.agents/agents.json`, `.agents/intel/`, and `scripts/agent-check` are sync, generated-intelligence, and enforcement surfaces; DotAgent role profiles are the Markdown files under `plugins/dotagent/agents/`.
 
+Agent Toolkit is tooling only. It pulls or updates DotAgent, writes DotAgent-managed rules into global agent files, links the Gemini extension, builds repo intelligence, and runs checks. DotAgent owns the rules, skills, role profiles, manifests, commands, and host-specific behavior.
+
 ### Install
 
 Claude Code:
@@ -257,7 +254,7 @@ bunx @harryy/agent-toolkit setup --yes
 bunx @harryy/agent-toolkit repo migrate
 ```
 
-Codex consumes `AGENTS.md` directly and can read the local plugin metadata at `plugins/dotagent/.codex-plugin/plugin.json`.
+Codex consumes repo and global `AGENTS.md` rules directly. Agent Toolkit setup/update registers this DotAgent checkout as a Codex local marketplace by writing `[marketplaces.dotagent]` to `~/.codex/config.toml`; it should not copy DotAgent skills into `~/.codex/skills`. The local Codex plugin manifest at `plugins/dotagent/.codex-plugin/plugin.json` declares DotAgent skills with `"skills": "./skills/"`, and Codex UI metadata lives in `agents/openai.yaml` files. Codex discovery should come through the local marketplace entry and DotAgent plugin metadata, not through copied files. Agent Toolkit setup/update does not convert `plugins/dotagent/agents/*.md` into native Codex subagents; until Codex lists those skills/agents in the active session, treat DotAgent role names as guidance only.
 
 For repo-local agent sync:
 
@@ -289,16 +286,17 @@ claude plugin uninstall dotagent@agent-toolkit
 
 ```
   marketplace add           →  Registers harryy2510/agent-toolkit as a plugin source
-  plugin install              →  Installs dotagent from the marketplace
-                                 Skills, agents, commands available immediately
+  Claude plugin install      →  Installs dotagent from the marketplace
+                                 Claude skills, agents, commands available immediately
 
-  /dotagent:setup →  Managed rules inserted into ~/.claude/CLAUDE.md and ~/.codex/AGENTS.md
+  agent-toolkit setup/update → Pulls DotAgent, writes DotAgent rules into
+                                ~/.claude/CLAUDE.md and ~/.codex/AGENTS.md,
+                                and links the Gemini extension
 
-  plugin update              →  Plugin cache refreshed from git
-  /dotagent:update → Same + refreshes global conventions
+  /dotagent:update           →  Claude plugin update + refreshes global rules
 
-  /dotagent:uninstall → Removes managed conventions from global instruction files
-  plugin uninstall              →  Removes plugin from cache
+  /dotagent:uninstall        →  Removes managed conventions from global instruction files
+  plugin uninstall           →  Removes plugin from cache
 ```
 
 ---
@@ -344,7 +342,7 @@ bunx @harryy/agent-toolkit repo check
    color: blue
    ---
    ```
-2. Keep it concise, but do not delete essential operating knowledge just to satisfy a line target. Include role, triggers, required skills, tools, rules, and outputs.
+2. Keep it concise, but do not delete essential operating knowledge just to satisfy a line target. Include role, triggers, useful skills, tools, rules, and outputs.
 3. Run `/skill-lint agents`
 
 ### Contributing rules

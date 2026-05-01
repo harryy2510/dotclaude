@@ -38,7 +38,7 @@ Use this flow when routing is requested, when work is broad enough for subagents
 
 ## Routing Matrix
 
-| Work type | Agent | Required skills |
+| Work type | Agent | Useful skills |
 |---|---|---|
 | Multi-agent coordination, decomposition, specialist selection | `agents-orchestrator` | `agent-routing`, `repo-intelligence`, `toolchain` |
 | Complex full-stack implementation | `engineering-senior-developer` | `toolchain`, `repo-intelligence`, `tanstack-start-cloudflare`, `react-best-practices`, `react-query-mutative`, `forms-rhf-zod`, `zustand-x-ui-state`, `supabase-auth-data`, `supabase-postgres-best-practices`, `cloudflare`, `ui`, `testing` |
@@ -71,7 +71,8 @@ Use this flow when routing is requested, when work is broad enough for subagents
 
 ## Delivery Gates
 
-- Before shipping substantial work, run: deslop/code-quality pass, relevant tests, reviewer pass, delivery validation, and docs sync when behavior or commands changed.
+- For straightforward edits, do not add separate review or verification phases unless they materially reduce risk.
+- For substantial or risky work, run the smallest useful set of quality checks, relevant tests, review, delivery validation, and docs sync when behavior or commands changed.
 - When agent, skill, command, or plugin config changes, run `skill-lint` and check for conflicting rules, overbroad tools, stale triggers, and broken references.
 - Compare implementation against the approved plan or acceptance criteria; flag drift even when tests pass.
 - For developer-facing APIs, CLIs, SDKs, docs, or setup flows, include a DX review: time-to-first-success, install friction, copy/paste command accuracy, error recovery, and examples.
@@ -85,6 +86,6 @@ When invoking a native specialist, include:
 - task goal and non-goals
 - files or directories it owns
 - repo constraints and relevant user constraints
-- required skills or checks
+- useful skills or required checks
 - expected output format
 - instruction not to revert unrelated user changes

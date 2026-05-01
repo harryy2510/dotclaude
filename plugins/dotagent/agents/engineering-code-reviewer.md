@@ -1,6 +1,6 @@
 ---
 name: engineering-code-reviewer
-description: "MUST BE USED when reviewing diffs, PRs, regressions, risky edits, security impact, performance impact, maintainability, missing tests, or any code changes before completion."
+description: "MUST BE USED when reviewing diffs, PRs, regressions, risky edits, security impact, performance impact, maintainability concerns, missing tests, release readiness, or when the user asks for review."
 model: inherit
 tools: Read, Grep, Glob, Bash
 skills:

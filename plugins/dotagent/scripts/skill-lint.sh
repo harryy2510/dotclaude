@@ -100,7 +100,7 @@ lint_file() {
 
 	if [ "$basename" != "SKILL.md" ]; then
 		if ! echo "$frontmatter" | grep -q '^skills:'; then
-			error "$label — agent frontmatter must declare required skills"
+			error "$label — agent frontmatter must declare skills hints"
 			issues=$((issues + 1))
 		fi
 		if ! echo "$frontmatter" | grep -q '^tools:'; then

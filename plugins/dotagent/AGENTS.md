@@ -19,6 +19,14 @@ Default to speed mode unless the user explicitly asks for deep review, exhaustiv
 - Timebox investigation to about 5 minutes before making a concrete edit plan.
 - Timebox blockers to about 10 minutes, then record the blocker and move on or ask for direction.
 
+## Planning And Phases
+
+- Use an explicit plan only when the task is broad, ambiguous, risky, user-requested, or benefits from independent subagents.
+- For straightforward edits, skip planning and start execution after reading the relevant local context.
+- For broad tasks, write a short execution plan, split independent work into native subagents when available and allowed, and begin the first concrete step immediately.
+- Do not run separate research, review, or verification phases unless the user asks for them or they materially reduce risk.
+- Prefer focused checks tied to changed behavior; reserve full verification for PRs, commits, releases, broad shared behavior, or explicit requests.
+
 ## Scope And Precedence
 
 - Read repository instructions first: `AGENTS.md`, `CLAUDE.md`, `README.md`, and equivalent local guidance.
@@ -41,7 +49,7 @@ Default to speed mode unless the user explicitly asks for deep review, exhaustiv
 - Agent Toolkit repo files such as `.agents/agents.json`, `.agents/intel/`, and `scripts/agent-check` are sync, intelligence, and enforcement files. They are not repo-local role profiles.
 - DotAgent role profiles are the Markdown files in the DotAgent plugin source at `plugins/dotagent/agents/`; in an installed global package they are normally under `~/.agent-toolkit/plugins/dotagent/plugins/dotagent/agents/`.
 - Claude: use native subagents only when Claude exposes the relevant DotAgent agent. If not exposed, treat DotAgent role names as lightweight guidance.
-- Codex: global `AGENTS.md` rules do not automatically install DotAgent skills or native agents. If DotAgent skills or agents are not listed in the current Codex session, do not claim they are active; use available native subagents or accessible DotAgent profile files as reference only.
+- Codex: global `AGENTS.md` rules do not automatically install DotAgent skills or native agents. Agent Toolkit setup/update registers the DotAgent checkout as a Codex local marketplace through `[marketplaces.dotagent]` in `~/.codex/config.toml`; Codex discovery should come through that marketplace and DotAgent's plugin metadata, not copied files in `~/.codex/skills`. If DotAgent skills or agents are not listed in the current Codex session, do not claim they are active; use available native subagents or accessible DotAgent profile files as reference only.
 - Gemini: the DotAgent Gemini extension provides shared context, not guaranteed native subagents. Treat role profiles as guidance unless Gemini exposes them as callable agents.
 - Never present `agent-routing` as mandatory runtime behavior unless the current host actually has the routing skill or agent profiles available.
 

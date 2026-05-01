@@ -13,11 +13,17 @@ This repository contains the DotAgent plugin and the shared agent rules it insta
 - Do not commit `.agents/intel/`; it is local generated repo intelligence.
 - Do not add Superpowers docs or planning docs to this public repo.
 
+## Repo Intelligence
+
+- Before broad exploration, read `.agents/intel/index.md` if it exists.
+- `.agents/intel/` is generated local repo intelligence, not a role-profile directory.
+
 ## Plugin Layout
 
 - `plugins/dotagent/.claude-plugin/plugin.json` is the Claude Code manifest.
 - `plugins/dotagent/.codex-plugin/plugin.json` is the Codex plugin manifest.
 - `plugins/dotagent/gemini-extension/` is the Gemini CLI extension wrapper. It links to the shared `AGENTS.md` and `skills/` without exposing Claude-only agent definitions to Gemini.
+- `plugins/dotagent/agents/*.md` are role profiles; `plugins/dotagent/agents/openai.yaml` is Codex interface metadata, not a role profile.
 - `plugins/dotagent/CLAUDE.md` is the Claude Code compatibility rules file for the plugin package.
 - `plugins/dotagent/AGENTS.md` is the shared global rules source for agent-agnostic setup.
 - `plugins/dotagent/skills/` should stay usable as focused skill instructions across compatible agents.

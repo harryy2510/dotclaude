@@ -158,7 +158,7 @@ bunx @harryy/agent-toolkit repo check
 
 ## 🎯 Agent Orchestration
 
-The `agent-routing` skill maps work types to specialists and requires a routing receipt before substantial work. When the host supports native subagents and policy allows it, the matching specialist is invoked; otherwise the role profile becomes the current-agent operating mode. Multi-agent orchestration stays in the main thread so specialists can actually be called directly.
+The `agent-routing` skill maps work types to specialists when the current host exposes DotAgent skills or the role profile files are accessible. It is skipped for normal speed-mode edits unless the user asks for role routing or the task is broad enough for subagents. When the host supports native subagents and policy allows it, a matching specialist can be invoked for self-contained work; otherwise the role profile is lightweight local guidance. Multi-agent orchestration stays in the main thread so specialists can actually be called directly.
 
 The `agents-orchestrator` enforces an 8-phase workflow:
 
@@ -227,7 +227,7 @@ dotagent/
 
 ## 🔧 Install / Update / Uninstall
 
-Claude Code uses its native plugin system. Codex and other agents can consume the shared instructions through `AGENTS.md`, `.agents/agents.json`, and the Codex plugin manifest.
+Claude Code uses its native plugin system. Codex and other agents can consume the shared instructions through `AGENTS.md`, `.agents/agents.json`, and the Codex plugin manifest. `.agents/agents.json`, `.agents/intel/`, and `scripts/agent-check` are sync, generated-intelligence, and enforcement surfaces; DotAgent role profiles are the Markdown files under `plugins/dotagent/agents/`.
 
 ### Install
 

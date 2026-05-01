@@ -1,29 +1,40 @@
 ---
 name: agent-routing
-description: "Use when deciding which role profile, skill, native subagent, or agent-team pattern should handle work. Must be used before substantial work, broad exploration, reviews, implementation, testing, documentation, or any task that maps to a specialist agent."
+description: "Use when deciding which available role profile, skill, native subagent, or agent-team pattern should handle work. Applies when the user asks for routing, the task is broad enough for subagents, or the host exposes DotAgent role profiles and routing is materially useful."
 ---
 
 # Agent Routing
 
-Route work before doing work. The goal is that specialists are actually used when their domain appears, without wasting context on unrelated roles.
+Route work when routing will improve the outcome. The goal is to use specialists when the current host actually exposes them, without wasting context on unavailable roles or skill ceremonies.
+
+## Capability Boundary
+
+- `.agents/agents.json` is agent-tool sync configuration, not a role-profile directory.
+- `.agents/intel/` is generated repo intelligence, not a role-profile directory.
+- `scripts/agent-check` is enforcement/check tooling, not a role profile.
+- DotAgent role profiles are the Markdown files in `plugins/dotagent/agents/` or the installed DotAgent package's equivalent path.
+- DotAgent skills are the directories in `plugins/dotagent/skills/` or the installed package's equivalent path.
+- `agent-routing` is an active capability only when the current host exposes this skill or the role profile files are accessible. If they are unavailable, treat role names as lightweight guidance and use the host capabilities that are actually available.
 
 ## Activation Flow
 
-Before substantial work:
+Use this flow when routing is requested, when work is broad enough for subagents, or when the host exposes DotAgent profiles and routing materially reduces risk:
 
 1. Identify the work type.
-2. Pick every matching role profile from `agents/`.
-3. If the host supports native subagents and policy/user permissions allow delegation, invoke the matching specialist for self-contained work. Do not merely mention the specialist.
-4. If native subagents are unavailable or disallowed, read the role profile and operate in that mode yourself.
-5. Read every skill named in the role profile `skills:` list, plus any skill required by repo instructions.
-6. Announce one routing receipt: `Active role: <agent>; skills: <skills>; mode: <native|local>; reason: <trigger>`.
+2. Confirm the host exposes DotAgent role profiles, or that the profile files are accessible locally.
+3. Pick every matching role profile from the DotAgent `agents/` directory.
+4. If the host supports native subagents and policy/user permissions allow delegation, invoke the matching specialist for self-contained work. Do not merely mention the specialist.
+5. If native subagents are unavailable or disallowed, read the role profile and operate in that mode yourself.
+6. Treat skills named in the role profile `skills:` list as optional context unless the user asks for that role, the task is high-risk, or the skill materially reduces risk.
+7. Announce one routing receipt: `Active role: <agent>; skills: <skills>; mode: <native|local>; reason: <trigger>`.
 
 ## Host Rules
 
-- Claude Code: custom agents are selected by their frontmatter `description`; `MUST BE USED` and `Use PROACTIVELY` descriptions should be treated as routing requirements.
+- Claude Code: custom agents are selected by their frontmatter `description` when the DotAgent agent files are installed or otherwise exposed to Claude. If they are not exposed, use the role descriptions as guidance only.
 - Claude Code subagents cannot spawn other subagents. Keep coordination roles such as `agents-orchestrator` in the main thread when they need to invoke specialists; the main thread should call each specialist directly.
-- Codex: current releases spawn subagents only when the user explicitly asks for subagents or parallel agent work. Without that explicit ask, use the matching role profile locally.
-- Other hosts: use native delegation only when the tool exposes it and the current policy permits it.
+- Codex: global `AGENTS.md` rules do not install DotAgent skills or native agents. Current Codex sessions spawn subagents only when the user explicitly asks for subagents or parallel agent work; otherwise use accessible DotAgent profile files as local guidance.
+- Gemini: the DotAgent Gemini extension points at shared context. Do not assume native DotAgent subagents exist unless Gemini exposes them as callable agents.
+- Other hosts: use native delegation only when the tool exposes it and the current policy permits it. Otherwise treat role names as routing hints.
 
 ## Routing Matrix
 

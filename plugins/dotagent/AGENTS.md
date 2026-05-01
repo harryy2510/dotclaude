@@ -3,6 +3,22 @@
 
 These rules apply to every agent session and every project unless a more specific repository instruction overrides them.
 
+## Default Execution Mode
+
+Default to speed mode unless the user explicitly asks for deep review, exhaustive testing, E2E validation, release readiness, or careful verification.
+
+- Use repository instructions and existing patterns first.
+- Use skills only when they materially reduce risk or the user explicitly requests them.
+- For straightforward code changes, do not run skill ceremonies first.
+- Use parallel subagents only for clearly independent work when supported and allowed.
+- Do not use Browser Use or Computer Use unless explicitly requested or required for the task.
+- Do not run full test suites unless explicitly requested, preparing a commit/PR/release, or touching broad shared behavior.
+- Run the smallest targeted check that covers changed behavior.
+- Skip checks only for docs-only or trivial edits, and state that checks were skipped.
+- Keep tracker/doc updates to concise bullets.
+- Timebox investigation to about 5 minutes before making a concrete edit plan.
+- Timebox blockers to about 10 minutes, then record the blocker and move on or ask for direction.
+
 ## Scope And Precedence
 
 - Read repository instructions first: `AGENTS.md`, `CLAUDE.md`, `README.md`, and equivalent local guidance.
@@ -10,16 +26,24 @@ These rules apply to every agent session and every project unless a more specifi
 - Local project rules override these global defaults.
 - Tool-specific global files should point to this shared policy where possible.
 
-## Mandatory Startup
+## Startup And Routing
 
-- Before substantial work, run the `agent-routing` flow: identify the work type, pick the matching role profile from `agents/`, and state a one-line routing receipt.
-- If the host supports native subagents and current policy/user permissions allow delegation, invoke the matching specialist for self-contained work. If native subagents are unavailable or disallowed, read the role profile and use it as the current-agent operating mode.
+- For speed mode, skip agent-routing unless the user asks for role routing or the task is broad enough to need subagents.
+- If agent-routing is used and the host supports native subagents, invoke the matching specialist only for self-contained work that can run independently. If native subagents are unavailable or disallowed, use the matching role profile as lightweight guidance.
 - Do not spawn `agents-orchestrator` as a child subagent when it needs to call other agents; keep orchestration in the main thread and invoke specialists directly.
-- Treat the `skills:` list in an agent profile as required context for that role.
-- Before writing code, read every relevant skill. Do not rely on memory for skill contents.
-- Always read `toolchain` for setup, scripts, linting, formatting, type checking, or new package work.
-- Always read `repo-intelligence` before broad codebase exploration, refactors, reviews, or completion checks.
-- Always read `agent-routing` when deciding which role profile, skill, or native subagent should handle work.
+- Treat the `skills:` list in an agent profile as optional context unless the user asks for that role, the task is high-risk, or the skill materially reduces risk.
+- Use skills only when they materially reduce risk or the user explicitly requests them.
+- For speed-mode implementation, do not run skill ceremonies before straightforward code changes.
+- Use repository instructions and existing patterns first.
+
+## Host Capability Reality
+
+- Agent Toolkit repo files such as `.agents/agents.json`, `.agents/intel/`, and `scripts/agent-check` are sync, intelligence, and enforcement files. They are not repo-local role profiles.
+- DotAgent role profiles are the Markdown files in the DotAgent plugin source at `plugins/dotagent/agents/`; in an installed global package they are normally under `~/.agent-toolkit/plugins/dotagent/plugins/dotagent/agents/`.
+- Claude: use native subagents only when Claude exposes the relevant DotAgent agent. If not exposed, treat DotAgent role names as lightweight guidance.
+- Codex: global `AGENTS.md` rules do not automatically install DotAgent skills or native agents. If DotAgent skills or agents are not listed in the current Codex session, do not claim they are active; use available native subagents or accessible DotAgent profile files as reference only.
+- Gemini: the DotAgent Gemini extension provides shared context, not guaranteed native subagents. Treat role profiles as guidance unless Gemini exposes them as callable agents.
+- Never present `agent-routing` as mandatory runtime behavior unless the current host actually has the routing skill or agent profiles available.
 
 ## Hard Rules
 
@@ -70,6 +94,7 @@ These rules apply to every agent session and every project unless a more specifi
 
 ## Common Skill Routing
 
+- These names are routing hints when the matching DotAgent skills are installed or the profile files are accessible; otherwise use the nearest available host capability and keep moving.
 - New project or tooling setup: `toolchain`, `project-setup`, `scaffold`
 - Codebase exploration or reviews: `repo-intelligence`, `deslop`
 - Agent delegation or role selection: `agent-routing`
@@ -86,8 +111,8 @@ These rules apply to every agent session and every project unless a more specifi
 
 ## Completion
 
-- Before claiming work is complete, run the repo's relevant check command when practical.
-- Prefer `bun run check` when the repo defines it.
+- For speed mode, run only targeted checks unless the user asks for full verification, commit, PR, or release readiness.
+- Before PR/commit, run the relevant package checks. Full repo checks are optional unless requested.
 - Run `/skill-lint` or `plugins/dotagent/scripts/skill-lint.sh` when agent, skill, command, or plugin instruction files change.
 - Run `bunx @harryy/agent-toolkit repo check` in agentized repos once the toolkit is available.
 - Run `agents sync --check` when `AGENTS.md` or `.agents/` changed.

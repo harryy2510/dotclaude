@@ -19,6 +19,13 @@ Default to speed mode unless the user explicitly asks for deep review, exhaustiv
 - Timebox investigation to about 5 minutes before making a concrete edit plan.
 - Timebox blockers to about 10 minutes, then record the blocker and move on or ask for direction.
 
+## Speed Discipline
+
+- Prefer the next concrete action over extra process, research, or status ceremony.
+- Do not run broad checks for simple commits or narrow edits.
+- Do not use Browser Use, Computer Use, full E2E, or release-style validation unless explicitly requested.
+- Stop verifying once the requested operation has completed and the smallest relevant check has passed.
+
 ## Planning And Phases
 
 - Use an explicit plan only when the task is broad, ambiguous, risky, user-requested, or benefits from independent subagents.
